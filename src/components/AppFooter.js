@@ -31,7 +31,7 @@ export const AppFooter = () => {
                 </div>
             </div>
             <hr/>
-            <span>© Copyright 2020</span>
+            <p>© Copyright 2020</p>
         </div>
 
 

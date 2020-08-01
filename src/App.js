@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from 'react';
+import { Router, Switch,Route } from 'react-router-dom'
 import './App.css';
-import {AppBar, Tabs, Tab, Container, Menu, MenuItem, CircularProgress } from '@material-ui/core';
+import {AppBar, Tabs, Tab, Menu, MenuItem } from '@material-ui/core';
 import './style/home.css';
 import axios from "axios";
-import {Category, Home} from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
-import {Survey} from "./components/Survey";
 import {AppFooter} from "./components/AppFooter";
-// import logo from '/images/logo.png';
+import {Home} from "./pages/Home";
+import history from './history';
+import {Signup} from "./pages/Signup";
+import {User} from "./pages/User";
 
 // Server host
 const host = 'http://localhost:8081';
@@ -27,6 +29,7 @@ function App() {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
+    const [user, setUser] = useState(null);
     // Mounting functions
     /**
      * componentDidMount
@@ -100,7 +103,7 @@ function App() {
             <AppBar>
                 <Tabs className={"tabBar"}>7
                     <img className={'logo'} src="/logo.png" alt="logo" href={'/'}/>
-                    <Tab label={'Anasayfa'}/>
+                    <Tab label={'Anasayfa'} href={'/'}/>
                     <Tab label={'Kategoriler'} onClick={handleClick} aria-controls={'categories_menu'}/>
                     <Menu
                         id={'categories_menu'}
@@ -122,7 +125,7 @@ function App() {
                                    onChange={event => setPassword(event.target.value)} variant={'outlined'}
                                    inputProps={loginTextField}/>
                         <Button className={'loginButton'} type={'submit'}>Giriş</Button>
-                        <Link className={'signUp'} href="#">
+                        <Link className={'signUp'} href="/sign-up">
                             Kayıt ol
                         </Link>
                     </form>
@@ -130,19 +133,15 @@ function App() {
                 </Tabs>
             </AppBar>
             <Toolbar/>
-            <Container maxWidth={'md'}>
-                <form className={'searchForm'} action="" onSubmit={handleSubmit}>
-                    <TextField className={'searchBar'} size={'small'} placeholder={'Örn: lorem, @username, ...'}
-                               id="outlined-basic" label="Arama" variant="outlined" onChange={handleChange}/>
-                </form>
-                {surveys.map(survey => (
-                    <Survey data={survey}/>
-                ))}
-                {!surveyLoading && <Button variant={'contained'} className={'loadMoreButton'} onClick={getSurveys}>Daha fazla...</Button>}
-                {(surveyLoading) && <CircularProgress/>}
+            <Router history={history}>
+                <Route exact path={'/'}
+                       component={() => <Home surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
+                                              surveyLoading={surveyLoading} handleChange={handleChange}/>}/>
+                <Route path={'/sign-up'} component={Signup}/>
+                {/*User login olduysa gidebileceği profil sayfası*/}
+                {user && <Route path={'/user/:id'} component={User}/>}
+            </Router>
 
-
-            </Container>
             <AppFooter/>
         </div>
     );
