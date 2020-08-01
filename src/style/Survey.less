@@ -1,74 +1,84 @@
-.Survey {
-  margin-top: 4rem;
-  height: 7rem;
-  display: flex !important;
-  position: relative;
-  .image {
-    object-fit: cover;
-    border: 2px solid #C9D3DD;
-    flex: 2;
-    width: 20%;
-    height: 100%;
-  }
-  .content {
-    position: relative;
-    display: flex;
-    flex: 8;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding-left: 2rem;
-    height: 100%;
-    .title {
-      margin-top: 9px;
-      color: #3B4754;
-      font-size: large;
-      font-weight: bolder;
-      text-transform: capitalize;
-
-    }
-
-    .explanation {
-      margin-top: 1rem;
-      color: #798DA3;
-      font-size: smaller;
-      text-align: justify;
-    }
+  .Survey {
     .contentFooter {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      position: relative;
-      -webkit-transform: translateY(200%);
-      -moz-transform: translateY(200%);
-      -ms-transform: translateY(200%);
-      -o-transform: translateY(200%);
-      transform: translateY(200%);
-      right: 0;
+
+      position: absolute;
       bottom: 0;
-      span {
-        color: #C0C0C0;
-      }
+      right: 0;
+      width: 80%;
+
+      -webkit-transform: translateY(100%) ;
+      -moz-transform: translateY(100%);
+      -ms-transform: translateY(100%);
+      -o-transform: translateY(100%);
+      transform: translateY(100%);
+      -webkit-transform: scaleX(-2rem);
+      -moz-transform: scaleX(-2rem);
+      -ms-transform: scaleX(-2rem);
+      -o-transform: scaleX(-2rem);
+      transform: scaleX(-2rem);
+      display: flex;
+
       .username {
-        text-align: start;
         flex: 1;
+        justify-content: start;
+        text-align: start;
       }
-      .voteCount, .commentCount {
-        text-align: end;
-      }
+
       .voteCount {
         margin-right: 1rem;
       }
+
+      span {
+        color: #C0C0C0;
+        font-size: small;
+
+      }
+    }
+    margin-top: 4rem;
+    height: 7rem;
+    display: flex !important;
+    position: relative;
+    .image {
+      object-fit: cover;
+      flex: 2;
+      width: 20%;
+      height: 100%;
+    }
+    .content {
+      position: relative;
+      display: flex;
+      flex: 8;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding-left: 2rem;
+      height: 100%;
+      .title {
+        margin-top: 9px;
+        color: #3B4754;
+        font-size: large;
+        font-weight: bolder;
+        text-transform: capitalize;
+
+      }
+
+      .explanation {
+        margin-top: 1rem;
+        color: #798DA3;
+        font-size: smaller;
+        text-align: justify;
+        padding-right: 1rem;
+      }
+
+    }
+
+    .dueDate {
+      color: #C0C0C0;
+      font-size: smaller;
+      //font-weight: lighter;
+      position: absolute;
+      right: 0;
+      transform: translateY(-100%);
     }
 
   }
-
-  .dueDate {
-    color: #D6DEE8;
-    font-size: smaller;
-    //font-weight: lighter;
-    position: absolute;
-    right: 0;
-    transform: translateY(-100%);
-  }
-}

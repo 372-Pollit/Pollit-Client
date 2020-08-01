@@ -4,9 +4,37 @@
   display: flex !important;
   position: relative;
 }
+.Survey .contentFooter {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 80%;
+  -webkit-transform: translateY(100%);
+  -moz-transform: translateY(100%);
+  -ms-transform: translateY(100%);
+  -o-transform: translateY(100%);
+  transform: translateY(100%);
+  -webkit-transform: scaleX(-2rem);
+  -moz-transform: scaleX(-2rem);
+  -ms-transform: scaleX(-2rem);
+  -o-transform: scaleX(-2rem);
+  transform: scaleX(-2rem);
+  display: flex;
+}
+.Survey .contentFooter .username {
+  flex: 1;
+  justify-content: start;
+  text-align: start;
+}
+.Survey .contentFooter .voteCount {
+  margin-right: 1rem;
+}
+.Survey .contentFooter span {
+  color: #C0C0C0;
+  font-size: small;
+}
 .Survey .image {
   object-fit: cover;
-  border: 2px solid #C9D3DD;
   flex: 2;
   width: 20%;
   height: 100%;
@@ -33,36 +61,10 @@
   color: #798DA3;
   font-size: smaller;
   text-align: justify;
-}
-.Survey .content .contentFooter {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  -webkit-transform: translateY(200%);
-  -moz-transform: translateY(200%);
-  -ms-transform: translateY(200%);
-  -o-transform: translateY(200%);
-  transform: translateY(200%);
-  right: 0;
-  bottom: 0;
-}
-.Survey .content .contentFooter span {
-  color: #C0C0C0;
-}
-.Survey .content .contentFooter .username {
-  text-align: start;
-  flex: 1;
-}
-.Survey .content .contentFooter .voteCount,
-.Survey .content .contentFooter .commentCount {
-  text-align: end;
-}
-.Survey .content .contentFooter .voteCount {
-  margin-right: 1rem;
+  padding-right: 1rem;
 }
 .Survey .dueDate {
-  color: #D6DEE8;
+  color: #C0C0C0;
   font-size: smaller;
   position: absolute;
   right: 0;

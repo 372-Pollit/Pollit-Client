@@ -9,6 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import {Survey} from "./components/Survey";
+import {AppFooter} from "./components/AppFooter";
 // import logo from '/images/logo.png';
 
 // Server host
@@ -135,6 +136,7 @@ function App() {
                 {surveyLoading && <CircularProgress/>}
 
             </Container>
+            <AppFooter/>
         </div>
     );
 }
