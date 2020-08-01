@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {AppBar, Tabs, Tab, Container, Menu, MenuItem} from '@material-ui/core';
+import {AppBar, Tabs, Tab, Container, Menu, MenuItem, CircularProgress } from '@material-ui/core';
 import './style/home.css';
 import axios from "axios";
 import {Category, Home} from "@material-ui/icons";
@@ -8,6 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import {Survey} from "./components/Survey";
 // import logo from '/images/logo.png';
 
 // Server host
@@ -24,6 +25,7 @@ function App() {
     const [surveyLoading, setSurveyLoading] = useState(false);
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [pageNumber, setPageNumber] = useState(0);
     // Mounting functions
     /**
      * componentDidMount
@@ -43,10 +45,16 @@ function App() {
 
         // Sunucudan trend surveyleri alıyoruz
         setSurveyLoading(true);
-        axios.get(host + '/survey/trends')
+        axios.get(host + '/survey/trends', {
+            params: {
+                pageNumber: pageNumber,
+            }
+        })
             .then(res => {
+                setPageNumber(pageNumber + 1);
+
+                setSurveys(surveys.concat(res.data));
                 setSurveyLoading(false);
-                setSurveys(res.data);
             })
             .catch(err => {
                 setSurveyLoading(false);
@@ -80,8 +88,6 @@ function App() {
         color: '#9FAFC1',
         marginRight: '0.7rem',
         fontSize: 'smaller'
-
-
     };
     return (
         <div className="App">
@@ -123,6 +129,11 @@ function App() {
                     <TextField className={'searchBar'} size={'small'} placeholder={'Örn: lorem, @username, ...'}
                                id="outlined-basic" label="Arama" variant="outlined" onChange={handleChange}/>
                 </form>
+                {surveys.map(survey => (
+                    <Survey data={survey}/>
+                ))}
+                {surveyLoading && <CircularProgress/>}
+
             </Container>
         </div>
     );

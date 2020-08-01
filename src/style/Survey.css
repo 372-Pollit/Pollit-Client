@@ -1,0 +1,71 @@
+.Survey {
+  margin-top: 4rem;
+  height: 7rem;
+  display: flex !important;
+  position: relative;
+}
+.Survey .image {
+  object-fit: cover;
+  border: 2px solid #C9D3DD;
+  flex: 2;
+  width: 20%;
+  height: 100%;
+}
+.Survey .content {
+  position: relative;
+  display: flex;
+  flex: 8;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 2rem;
+  height: 100%;
+}
+.Survey .content .title {
+  margin-top: 9px;
+  color: #3B4754;
+  font-size: large;
+  font-weight: bolder;
+  text-transform: capitalize;
+}
+.Survey .content .explanation {
+  margin-top: 1rem;
+  color: #798DA3;
+  font-size: smaller;
+  text-align: justify;
+}
+.Survey .content .contentFooter {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  -webkit-transform: translateY(200%);
+  -moz-transform: translateY(200%);
+  -ms-transform: translateY(200%);
+  -o-transform: translateY(200%);
+  transform: translateY(200%);
+  right: 0;
+  bottom: 0;
+}
+.Survey .content .contentFooter span {
+  color: #C0C0C0;
+}
+.Survey .content .contentFooter .username {
+  text-align: start;
+  flex: 1;
+}
+.Survey .content .contentFooter .voteCount,
+.Survey .content .contentFooter .commentCount {
+  text-align: end;
+}
+.Survey .content .contentFooter .voteCount {
+  margin-right: 1rem;
+}
+.Survey .dueDate {
+  color: #D6DEE8;
+  font-size: smaller;
+  position: absolute;
+  right: 0;
+  transform: translateY(-100%);
+}
+/*# sourceMappingURL=Survey.css.map */
