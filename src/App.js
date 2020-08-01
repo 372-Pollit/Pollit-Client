@@ -43,7 +43,12 @@ function App() {
                 setError(err);
                 setIsLoading(false);
             });
+        getSurveys();
+    }, []);
 
+
+    //Custom functions
+    const getSurveys = () => {
         // Sunucudan trend surveyleri alıyoruz
         setSurveyLoading(true);
         axios.get(host + '/survey/trends', {
@@ -61,9 +66,9 @@ function App() {
                 setSurveyLoading(false);
                 setError(err);
             })
-    }, []);
 
-    //Custom functions
+    };
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -133,7 +138,9 @@ function App() {
                 {surveys.map(survey => (
                     <Survey data={survey}/>
                 ))}
-                {surveyLoading && <CircularProgress/>}
+                {!surveyLoading && <Button variant={'contained'} className={'loadMoreButton'} onClick={getSurveys}>Daha fazla...</Button>}
+                {(surveyLoading) && <CircularProgress/>}
+
 
             </Container>
             <AppFooter/>

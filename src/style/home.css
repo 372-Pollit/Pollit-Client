@@ -78,4 +78,7 @@
   -o-transform: translateY(120%);
   transform: translateY(120%);
 }
+.loadMoreButton {
+  margin-top: 5rem !important;
+}
 /*# sourceMappingURL=home.css.map */

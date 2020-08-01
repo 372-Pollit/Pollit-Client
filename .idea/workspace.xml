@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db432b9e-bfce-4d9f-aa86-b449d489cf12" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/AppFooter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/style/AppFooter.less" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Survey.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Survey.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/Survey.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/Survey.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/Survey.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/Survey.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/Survey.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/Survey.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/home.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/home.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style/home.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/home.less" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,56 +19,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="138" column="22" lean-forward="true" selection-start-line="138" selection-start-column="22" selection-end-line="138" selection-end-column="22" />
+            <state relative-caret-position="174">
+              <caret line="140" column="34" lean-forward="true" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/AppFooter.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/style/AppFooter.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Survey.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="22" column="16" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/style/Survey.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -80,8 +34,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/style/home.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2160">
-              <caret line="90" column="32" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
+            <state relative-caret-position="428">
+              <caret line="95" column="29" selection-start-line="95" selection-start-column="29" selection-end-line="95" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -115,13 +69,13 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/public/manifest.json" />
         <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/src/style/home.less" />
         <option value="$PROJECT_DIR$/src/style/Survey.less" />
         <option value="$PROJECT_DIR$/src/components/Survey.js" />
         <option value="$PROJECT_DIR$/src/App.css" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/style/AppFooter.less" />
         <option value="$PROJECT_DIR$/src/components/AppFooter.js" />
+        <option value="$PROJECT_DIR$/src/style/home.less" />
+        <option value="$PROJECT_DIR$/src/App.js" />
       </list>
     </option>
   </component>
@@ -144,11 +98,6 @@
             <path>
               <item name="pollit-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="pollit-client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="pollit-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pollit-client" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="pollit-client" type="b2602c69:ProjectViewProjectNode" />
@@ -223,7 +172,7 @@
       <workItem from="1596126457719" duration="12785000" />
       <workItem from="1596195729394" duration="1286000" />
       <workItem from="1596273597872" duration="9356000" />
-      <workItem from="1596283906456" duration="5464000" />
+      <workItem from="1596283906456" duration="6989000" />
     </task>
     <task id="LOCAL-00001" summary="Initial AppBar">
       <created>1596149590203</created>
@@ -239,17 +188,24 @@
       <option name="project" value="LOCAL" />
       <updated>1596284056775</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Footer added">
+      <created>1596310452452</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1596310452452</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29865000" />
+    <option name="totallyTimeSpent" value="31390000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49744898" visible="true" weight="0.2647504" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49744898" visible="true" weight="0.2647504" />
       <window_info id="Structure" order="1" sideWeight="0.502551" side_tool="true" weight="0.26096824" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -288,7 +244,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial AppBar" />
     <MESSAGE value="Anasayfa temel tasarım" />
-    <option name="LAST_COMMIT_MESSAGE" value="Anasayfa temel tasarım" />
+    <MESSAGE value="Footer added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Footer added" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -359,13 +316,6 @@
     <entry file="file://$PROJECT_DIR$/node_modules/axios/index.d.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/style/home.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2160">
-          <caret line="90" column="32" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/style/Survey.less">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -380,16 +330,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="138" column="22" lean-forward="true" selection-start-line="138" selection-start-column="22" selection-end-line="138" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Survey.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
@@ -400,17 +340,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/style/AppFooter.less">
+    <entry file="file://$PROJECT_DIR$/src/components/AppFooter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+        <state relative-caret-position="576">
+          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/AppFooter.js">
+    <entry file="file://$PROJECT_DIR$/src/style/AppFooter.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+        <state relative-caret-position="120">
+          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/style/home.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="95" column="29" selection-start-line="95" selection-start-column="29" selection-end-line="95" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="140" column="34" lean-forward="true" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
