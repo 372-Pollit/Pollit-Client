@@ -78,6 +78,31 @@
   -o-transform: translateY(120%);
   transform: translateY(120%);
 }
+.profileButton {
+  margin-left: auto !important;
+}
+.profileButton .profileImage {
+  width: 4rem;
+  border-radius: 100%;
+}
+.AnasayfaLink {
+  text-decoration: none;
+}
+.AnasayfaLink .Anasayfa {
+  height: 100%;
+}
+.logoutLink {
+  text-decoration: none;
+}
+.logoutLink .logout {
+  color: #000000DE;
+}
+.profileLink {
+  text-decoration: none;
+}
+.profileLink .profile {
+  color: #000000DE;
+}
 .loadMoreButton {
   margin-top: 5rem !important;
 }
