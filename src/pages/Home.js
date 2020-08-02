@@ -12,11 +12,13 @@ export const Home = (props) => {
     const getSurveys = props.getSurveys;
     const surveyLoading = props.surveyLoading;
     const handleSubmit = props.handleSubmit;
+    const searchText = props.searchText;
     return (
         <Container maxWidth={'md'}>
             <form className={'searchForm'} action="" onSubmit={handleSubmit}>
-                <TextField className={'searchBar'} size={'small'} placeholder={'Örn: lorem, @username, ...'}
-                           id="outlined-basic" label="Arama" variant="outlined" onChange={handleChange}/>
+                <TextField defaultValue={searchText} className={'searchBar'} size={'small'} placeholder={'Örn: lorem,' +
+                ' @username, ...'}
+                           id="outlined-basic" label="Arama" variant="outlined"  onChange={(e) => handleChange(e)}/>
             </form>
             {surveys.map(survey => (
                 <Survey data={survey}/>

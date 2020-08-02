@@ -30,12 +30,19 @@ function App() {
     const [password, setPassword] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
     const [user, setUser] = useState(null);
+    const [isInSearch, setIsInSearch] = useState(false);
+    const [searchText, setSearchText] = useState("");
+
+    let tmp_searchText;
+
+
     // Mounting functions
     /**
      * componentDidMount
      */
     useEffect(() => {
         setIsLoading(true);
+        setIsInSearch(false);
         // Sunucudan kategorileri alıyoruz
         axios.get(host + '/category/findAll')
             .then(res => {
@@ -52,23 +59,44 @@ function App() {
 
     //Custom functions
     const getSurveys = () => {
-        // Sunucudan trend surveyleri alıyoruz
-        setSurveyLoading(true);
-        axios.get(host + '/survey/trends', {
-            params: {
-                pageNumber: pageNumber,
-            }
-        })
-            .then(res => {
-                setPageNumber(pageNumber + 1);
+        console.log(isInSearch);
+        if (isInSearch) {
+            setSurveyLoading(true);
+            axios.get(host + '/survey/search', {
+                params: {
+                    search: searchText,
+                    pageNumber: pageNumber,
+                }
+            })
+                .then(res => {
+                    setPageNumber(pageNumber + 1);
 
-                setSurveys(surveys.concat(res.data));
-                setSurveyLoading(false);
+                    setSurveys(surveys.concat(res.data));
+                    setSurveyLoading(false);
+                })
+                .catch(err => {
+                    setSurveyLoading(false);
+                    setError(err);
+                })
+
+        } else {
+            setSurveyLoading(true);
+            axios.get(host + '/survey/trends', {
+                params: {
+                    pageNumber: pageNumber,
+                }
             })
-            .catch(err => {
-                setSurveyLoading(false);
-                setError(err);
-            })
+                .then(res => {
+                    setPageNumber(pageNumber + 1);
+                    setSurveys(surveys.concat(res.data));
+                    setSurveyLoading(false);
+                })
+                .catch(err => {
+                    setSurveyLoading(false);
+                    setError(err);
+                });
+
+        }
 
     };
 
@@ -81,11 +109,30 @@ function App() {
     };
 
     const handleSubmit = () => {
+        setPageNumber(0);
+        setSurveyLoading(true);
+        setIsInSearch(true);
+        setSearchText(tmp_searchText);
+        axios.get(host + '/survey/search', {
+            params: {
+                search: tmp_searchText,
+                pageNumber: 0,
+            }
+        })
+            .then(res => {
+                setPageNumber(1);
+                setSurveys(res.data);
+                setSurveyLoading(false);
+            })
+            .catch(err => {
+                setSurveyLoading(false);
+                setError(err);
+            })
 
     };
 
     const handleChange = (e) => {
-        setInput(e.target.value);
+        tmp_searchText = e.target.value;
     };
 
     const login = () => {
@@ -135,7 +182,7 @@ function App() {
             <Toolbar/>
             <Router history={history}>
                 <Route exact path={'/'}
-                       component={() => <Home surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
+                       component={() => <Home searchText={searchText} surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
                                               surveyLoading={surveyLoading} handleChange={handleChange}/>}/>
                 <Route path={'/sign-up'} component={Signup}/>
                 {/*User login olduysa gidebileceği profil sayfası*/}
