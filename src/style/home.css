@@ -91,6 +91,18 @@
 .AnasayfaLink .Anasayfa {
   height: 100%;
 }
+.PopülerLink {
+  text-decoration: none;
+}
+.PopülerLink .Popüler {
+  height: 100%;
+}
+.MesajlarLink {
+  text-decoration: none;
+}
+.MesajlarLink .Mesajlar {
+  height: 100%;
+}
 .logoutLink {
   text-decoration: none;
 }

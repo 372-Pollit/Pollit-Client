@@ -196,8 +196,12 @@ function App() {
                             <Tab className={'Anasayfa'} label={'Anasayfa'}/>
                         </Link>
                         <Tab label={'Kategoriler'} onClick={handleClick} aria-controls={'categories_menu'}/>
-                        {user && <Tab label={'Popüler'} href={'/'}/>}
-                        {user && <Tab label={'Mesajlar'} href={'/'}/>}
+                        {user && <Link className={'PopülerLink'} to="/">
+                            <Tab className={'Popüler'} label={'Popüler'}/>
+                        </Link>}
+                        {user && <Link className={'MesajlarLink'} to="/">
+                            <Tab className={'Mesajlar'} label={'Mesajlar'}/>
+                        </Link>}
                         <Menu
                             id={'categories_menu'}
                             anchorEl={anchorEl}
