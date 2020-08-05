@@ -12,7 +12,7 @@ import {Home} from "./pages/Home";
 import history from './history';
 import {Signup} from "./pages/Signup";
 import {User} from "./pages/User";
-
+import './fonts.css';
 // Server host
 const host = 'http://localhost:8081';
 

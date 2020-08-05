@@ -23,8 +23,8 @@ export const Home = (props) => {
             {surveys.map(survey => (
                 <Survey data={survey}/>
             ))}
-            {!surveyLoading && <Button variant={'contained'} className={'loadMoreButton'} onClick={getSurveys}>Daha fazla...</Button>}
             {(surveyLoading) && <CircularProgress/>}
+            {!surveyLoading && <Button variant={'contained'} className={'loadMoreButton'} onClick={getSurveys}>Daha fazla...</Button>}
 
         </Container>
 

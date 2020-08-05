@@ -1,0 +1,33 @@
+.UserCard {
+  margin-top: 5rem;
+  display: flex;
+}
+.UserCard .UserAvatar {
+  flex: 1;
+  margin: 2rem;
+}
+.UserCard .UserData {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5rem;
+  position: relative;
+}
+.UserCard .UserData h5 {
+  font-family: "Montserrat", sans-serif;
+  text-align: left;
+  display: inline-block;
+  width: fit-content;
+}
+.UserCard .UserData h5 span {
+  font-weight: bolder;
+}
+.UserCard .UserData .username {
+  margin-bottom: 1rem;
+}
+.tabs {
+  background: #ebecf1;
+}
+/*# sourceMappingURL=User.css.map */
