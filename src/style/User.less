@@ -1,6 +1,13 @@
 .UserCard {
   margin-top: 5rem;
   display: flex;
+
+  .editLoading {
+    flex: 5;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 5rem;
+  }
   .UserAvatar {
     flex: 1;
     margin: 2rem;
@@ -28,6 +35,22 @@
 
     .username {
       margin-bottom: 1rem;
+    }
+
+    .form_1 {
+      display: flex;
+      flex-direction: row;
+      div {
+        flex: 1 !important;
+        &:first-child {
+          margin-right: 1rem;
+        }
+      }
+    }
+    .form_1, .form_2 {
+      div {
+        margin-top: 1rem;
+      }
     }
   }
 }

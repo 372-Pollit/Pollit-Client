@@ -242,7 +242,7 @@ function App() {
                                 </MenuItem>
                             </Link>
                             <MenuItem onClick={handleAvatarMenuClose}>Ayarlar</MenuItem>
-                            <Link className={'logoutLink'} onClick={logout} to={"/"}>
+                            <Link classNafome={'logoutLink'} onClick={logout} to={"/"}>
                                 <MenuItem className={'logout'}>
                                     Çıkış
                                 </MenuItem>

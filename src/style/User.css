@@ -2,6 +2,12 @@
   margin-top: 5rem;
   display: flex;
 }
+.UserCard .editLoading {
+  flex: 5;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 5rem;
+}
 .UserCard .UserAvatar {
   flex: 1;
   margin: 2rem;
@@ -26,6 +32,20 @@
 }
 .UserCard .UserData .username {
   margin-bottom: 1rem;
+}
+.UserCard .UserData .form_1 {
+  display: flex;
+  flex-direction: row;
+}
+.UserCard .UserData .form_1 div {
+  flex: 1 !important;
+}
+.UserCard .UserData .form_1 div:first-child {
+  margin-right: 1rem;
+}
+.UserCard .UserData .form_1 div,
+.UserCard .UserData .form_2 div {
+  margin-top: 1rem;
 }
 .tabs {
   background: #ebecf1;
