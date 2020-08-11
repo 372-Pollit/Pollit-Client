@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Router, Switch,Route } from 'react-router-dom'
+import { Router, Switch,Route, Link } from 'react-router-dom'
 import './App.css';
 import {AppBar, Tabs, Tab, Menu, MenuItem } from '@material-ui/core';
 import './style/home.css';
@@ -7,13 +7,12 @@ import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
-import { Link } from 'react-router-dom';
 import {AppFooter} from "./components/AppFooter";
 import {Home} from "./pages/Home";
 import history from './history';
 import {Signup} from "./pages/Signup";
 import {User} from "./pages/User";
-
+import './fonts.css';
 // Server host
 const host = 'http://localhost:8081';
 
@@ -31,12 +30,19 @@ function App() {
     const [password, setPassword] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
     const [user, setUser] = useState(null);
+    const [isInSearch, setIsInSearch] = useState(false);
+    const [searchText, setSearchText] = useState("");
+
+    let tmp_searchText;
+
+
     // Mounting functions
     /**
      * componentDidMount
      */
     useEffect(() => {
         setIsLoading(true);
+        setIsInSearch(false);
         // Sunucudan kategorileri alıyoruz
         axios.get(host + '/category/findAll')
             .then(res => {
@@ -53,23 +59,44 @@ function App() {
 
     //Custom functions
     const getSurveys = () => {
-        // Sunucudan trend surveyleri alıyoruz
-        setSurveyLoading(true);
-        axios.get(host + '/survey/trends', {
-            params: {
-                pageNumber: pageNumber,
-            }
-        })
-            .then(res => {
-                setPageNumber(pageNumber + 1);
+        console.log(isInSearch);
+        if (isInSearch) {
+            setSurveyLoading(true);
+            axios.get(host + '/survey/search', {
+                params: {
+                    search: searchText,
+                    pageNumber: pageNumber,
+                }
+            })
+                .then(res => {
+                    setPageNumber(pageNumber + 1);
 
-                setSurveys(surveys.concat(res.data));
-                setSurveyLoading(false);
+                    setSurveys(surveys.concat(res.data));
+                    setSurveyLoading(false);
+                })
+                .catch(err => {
+                    setSurveyLoading(false);
+                    setError(err);
+                })
+
+        } else {
+            setSurveyLoading(true);
+            axios.get(host + '/survey/trends', {
+                params: {
+                    pageNumber: pageNumber,
+                }
             })
-            .catch(err => {
-                setSurveyLoading(false);
-                setError(err);
-            })
+                .then(res => {
+                    setPageNumber(pageNumber + 1);
+                    setSurveys(surveys.concat(res.data));
+                    setSurveyLoading(false);
+                })
+                .catch(err => {
+                    setSurveyLoading(false);
+                    setError(err);
+                });
+
+        }
 
     };
 
@@ -95,11 +122,30 @@ function App() {
     };
 
     const handleSubmit = () => {
+        setPageNumber(0);
+        setSurveyLoading(true);
+        setIsInSearch(true);
+        setSearchText(tmp_searchText);
+        axios.get(host + '/survey/search', {
+            params: {
+                search: tmp_searchText,
+                pageNumber: 0,
+            }
+        })
+            .then(res => {
+                setPageNumber(1);
+                setSurveys(res.data);
+                setSurveyLoading(false);
+            })
+            .catch(err => {
+                setSurveyLoading(false);
+                setError(err);
+            })
 
     };
 
     const handleChange = (e) => {
-        setInput(e.target.value);
+        tmp_searchText = e.target.value;
     };
 
     const login = (e) => {
@@ -196,7 +242,7 @@ function App() {
                                 </MenuItem>
                             </Link>
                             <MenuItem onClick={handleAvatarMenuClose}>Ayarlar</MenuItem>
-                            <Link className={'logoutLink'} onClick={logout} to={"/"}>
+                            <Link classNafome={'logoutLink'} onClick={logout} to={"/"}>
                                 <MenuItem className={'logout'}>
                                     Çıkış
                                 </MenuItem>
@@ -207,7 +253,7 @@ function App() {
                 </AppBar>
                 <Toolbar/>
                 <Route exact path={'/'}
-                       component={() => <Home surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
+                       component={() => <Home searchText={searchText} surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
                                               surveyLoading={surveyLoading} handleChange={handleChange}/>}/>
                 {!user && <Route path={'/sign-up'} component={Signup}/>}
                 {/*User login olduysa gidebileceği profil sayfası*/}

@@ -1,0 +1,23 @@
+.SubbedCategories {
+  display: flex;
+  flex-wrap: wrap;
+}
+.SubbedCategories .CategoryCard {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin-top: 2rem;
+}
+.SubbedCategories .CategoryCard h4 {
+  margin: 2rem;
+}
+.SubbedCategories .CategoryCard button {
+  margin-right: 1rem;
+  margin-left: auto;
+  color: white;
+  background: crimson;
+}
+.SubbedCategories .CategoryCard .subButton {
+  background: #40B385;
+}
+/*# sourceMappingURL=SubbedCategories.css.map */

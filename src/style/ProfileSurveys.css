@@ -1,0 +1,9 @@
+.ProfileSurveys {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.ProfileSurveys .typeControl {
+  width: fit-content;
+}
+/*# sourceMappingURL=ProfileSurveys.css.map */

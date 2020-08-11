@@ -8,9 +8,7 @@ import Paper from "@material-ui/core/Paper";
 export function Survey(props) {
 
     let survey = props.data;
-    console.log(survey);
     useEffect(() => {
-        console.log(survey);
     }, [survey]);
     return (
         <Paper className="Survey" elevation={3}>

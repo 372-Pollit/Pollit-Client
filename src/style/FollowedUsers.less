@@ -1,0 +1,36 @@
+.FollowedUsers {
+  display: flex;
+  flex-wrap: wrap;
+ .UserCard {
+   width: 50%;
+   margin-top: 2rem;
+   display: flex;
+   align-items: center;
+   min-height: 7rem;
+   img {
+     margin: 1rem;
+     width: 5rem;
+   }
+   .UserCardData {
+     margin-left: 1rem;
+     display: flex;
+     flex-direction: column;
+     justify-content: start;
+     align-items: start;
+     h5 {
+       font-family: Montserrat, sans-serif;
+       text-align: start;
+       &:nth-child(2) {
+         font-weight: lighter;
+       }
+     }
+   }
+
+   .unfollowButton {
+     margin-left: auto;
+     background: crimson;
+     color: white;
+     margin-right: 1rem;
+   }
+ }
+}

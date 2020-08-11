@@ -1,0 +1,36 @@
+.FollowedUsers {
+  display: flex;
+  flex-wrap: wrap;
+}
+.FollowedUsers .UserCard {
+  width: 50%;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  min-height: 7rem;
+}
+.FollowedUsers .UserCard img {
+  margin: 1rem;
+  width: 5rem;
+}
+.FollowedUsers .UserCard .UserCardData {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+.FollowedUsers .UserCard .UserCardData h5 {
+  font-family: Montserrat, sans-serif;
+  text-align: start;
+}
+.FollowedUsers .UserCard .UserCardData h5:nth-child(2) {
+  font-weight: lighter;
+}
+.FollowedUsers .UserCard .unfollowButton {
+  margin-left: auto;
+  background: crimson;
+  color: white;
+  margin-right: 1rem;
+}
+/*# sourceMappingURL=FollowedUsers.css.map */
