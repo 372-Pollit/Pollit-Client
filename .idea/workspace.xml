@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:kursad" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="db432b9e-bfce-4d9f-aa86-b449d489cf12" name="Default Changelist" comment="">
+    <list default="true" id="db432b9e-bfce-4d9f-aa86-b449d489cf12" name="Default Changelist" comment="gitignore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/home.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/home.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/home.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style/home.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/style/home.less" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +47,15 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="kursadsaka &lt;ksaka@etu.edu.tr&gt;" />
+        <option value="ku" />
         <option value="Muhammed Emre Durdu &lt;muhammedemredurdu@gmail.com&gt;" />
       </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
@@ -64,19 +91,6 @@
       <recent name="C:\Users\Muhammed Emre Durdu\Desktop\Yedek\Workspace\Projeler\pollit-client\src\resource\images" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
@@ -93,7 +107,9 @@
       <workItem from="1596195729394" duration="1286000" />
       <workItem from="1596273597872" duration="9356000" />
       <workItem from="1596283906456" duration="6989000" />
-      <workItem from="1596399632937" duration="9403000" />
+      <workItem from="1596399632937" duration="13317000" />
+      <workItem from="1596749475859" duration="1059000" />
+      <workItem from="1597153109928" duration="1193000" />
     </task>
     <task id="LOCAL-00001" summary="Initial AppBar">
       <created>1596149590203</created>
@@ -116,7 +132,21 @@
       <option name="project" value="LOCAL" />
       <updated>1596310452452</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Login, logout">
+      <created>1596409996972</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1596409996972</updated>
+    </task>
+    <task id="LOCAL-00005" summary="popüler ve mesajlar tablerine link eklendi">
+      <created>1596413154211</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1596413154211</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,7 +157,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="kursad" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -138,9 +180,19 @@
     <MESSAGE value="Initial AppBar" />
     <MESSAGE value="Anasayfa temel tasarım" />
     <MESSAGE value="Footer added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Footer added" />
+    <MESSAGE value="Login, logout" />
+    <MESSAGE value="popüler ve mesajlar tablerine link eklendi" />
+    <option name="LAST_COMMIT_MESSAGE" value="popüler ve mesajlar tablerine link eklendi" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="569" y="270" key="#Configure_Path_Variables" timestamp="1597153194535">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="569" y="270" key="#Configure_Path_Variables/0.0.1536.834@0.0.1536.834" timestamp="1597153194535" />
+    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1596413152667">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1596413152667" />
     <state x="93" y="93" width="1350" height="648" key="DiffContextDialog" timestamp="1596408725434">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -169,10 +221,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="277" y="62" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1596399615793" />
-    <state x="586" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596372217609">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1596413160926">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="586" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1596372217609" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1596413160926" />
+    <state x="586" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1597157967535">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="586" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1597157967535" />
     <state x="309" y="19" width="1272" height="820" key="dock-window-1" timestamp="1596392293426">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -181,6 +237,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="1186" y="26" width="1272" height="820" key="dock-window-2/0.0.1536.834@0.0.1536.834" timestamp="1596392293426" />
+    <state x="557" y="130" key="git4idea.branch.GitSmartOperationDialog" timestamp="1597157894057">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="557" y="130" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.834@0.0.1536.834" timestamp="1597157894057" />
   </component>
   <component name="masterDetails">
     <states>
