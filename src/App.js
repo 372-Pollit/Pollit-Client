@@ -10,11 +10,12 @@ import Button from "@material-ui/core/Button";
 import {AppFooter} from "./components/AppFooter";
 import {Home} from "./pages/Home";
 import history from './history';
-import {Signup} from "./pages/Signup";
 import {User} from "./pages/User";
 import {NewSurveyDialog} from "./components/NewSurveyDialog";
+import {Signup} from "./components/Signup";
 import './fonts.css';
 import './style/NewSurvey.css';
+import './style/Signup.css';
 // Server host
 const host = 'http://localhost:8081';
 
@@ -43,6 +44,16 @@ function App() {
     const [newSurveyOptions, setNewSurveyOptions] = useState([]);
     const [newSurveyTags, setNewSurveyTags] = useState([]);
     const [isNewSurveyOpen, setNewSurvey] = useState(false);
+    // signup dialog states
+    const [signupFname, setSignupFname] = useState(null);
+    const [signupLname, setSignupLname] = useState(null);
+    const [signupUname, setSignupUname] = useState(null);
+    const [signupEmail, setSignupEmail] = useState(null);
+    const [signupPassword, setSignupPassword] = useState(null);
+    const [signupPasswordAgain, setSignupPasswordAgain] = useState(null);
+    const [signupBdate, setSignupBdate] = useState(null);
+    const [signupSex, setSignupSex] = useState(null);
+    const [isSignupOpen, setSignup] = useState(false);
 
     let tmp_searchText;
 
@@ -252,6 +263,60 @@ function App() {
         //TODO
     };
 
+    //signup handles
+    const openSignup = () => {
+        setSignup(true);
+    };
+
+    const closeSignup = () => {
+        clearSignupDialog();
+        setSignup(false);
+    };
+
+    const clearSignupDialog = () => {
+        setSignupFname(null);
+        setSignupLname(null);
+        setSignupUname(null);
+        setSignupEmail(null);
+        setSignupPassword(null);
+        setSignupPasswordAgain(null);
+        setSignupBdate(null);
+        setSignupSex(null);
+    }
+
+    // handle signup dialog
+    const handleSignupFname = (e) => {
+        setSignupFname(e.target.value);
+    };
+
+    const handleSignupLname = (e) => {
+        setSignupLname(e.target.value);
+    };
+
+    const handleSignupUname = (e) => {
+        setSignupUname(e.target.value);
+    };
+
+    const handleSignupEmail = (e) => {
+        setSignupEmail(e.target.value);
+    };
+
+    const handleSignupPassword = (e) => {
+        setSignupPassword(e.target.value);
+    };
+
+    const handleSignupPasswordAgain = (e) => {
+        setSignupPasswordAgain(e.target.value);
+    };
+
+    const handleSignupBdate = (e) => {
+        setSignupBdate(e.target.value);
+    };
+
+    const handleSignupSex = (e) => {
+        setSignupSex(e.target.value);
+    };
+
     // Custom styles
     const loginTextField = {
         color: '#9FAFC1',
@@ -295,7 +360,7 @@ function App() {
                                        onChange={event => setPassword(event.target.value)} variant={'outlined'}
                                        inputProps={loginTextField}/>
                             <Button className={'loginButton'} type={'submit'}>Giriş</Button>
-                            <Link className={'signUp'} to="/sign-up">
+                            <Link className={'signUp'} onClick={openSignup}>
                                 Kayıt ol
                             </Link>
                         </form> : <div style={{display: "flex", marginLeft: "auto"}}>
@@ -347,6 +412,15 @@ function App() {
                              handleNewSurveyOptionsAdd={handleNewSurveyOptionsAdd} handleNewSurveyOptionsChange={handleNewSurveyOptionsChange} 
                              handleNewSurveyOptionsRemove={handleNewSurveyOptionsRemove} handleNewSurveyTags={handleNewSurveyTags} 
                              isNewSurveyOpen={isNewSurveyOpen} closeNewSurvey={closeNewSurvey} postNewSurvey={postNewSurvey}/>
+            
+            <Signup isSignupOpen={isSignupOpen} closeSignup={closeSignup} signupFname={signupFname} 
+                    handleSignupFname= {handleSignupFname} signupLname={signupLname} 
+                    handleSignupLname= {handleSignupLname} signupUname={signupUname} 
+                    handleSignupUname= {handleSignupUname} signupEmail={signupEmail} 
+                    handleSignupEmail= {handleSignupEmail} signupPassword={signupPassword} 
+                    handleSignupPassword= {handleSignupPassword} signupPasswordAgain={signupPasswordAgain} 
+                    handleSignupPasswordAgain={handleSignupPasswordAgain} signupBdate={signupBdate} 
+                    handleSignupBdate={handleSignupBdate} signupSex={signupSex} handleSignupSex={handleSignupSex} />
 
             <AppFooter/>
         </div>
