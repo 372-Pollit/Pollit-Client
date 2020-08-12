@@ -1,0 +1,71 @@
+  .newSurvey {
+    margin-right: 1rem !important;
+    align-content: center;
+    display: flex;
+    margin: 1rem;
+  }
+  
+  .newSurveyButton {
+    border-radius: 2rem !important;
+    background: #303f9f !important;
+  }
+  
+  .newSurveyButton span {
+    color: #ffffff !important;
+  }
+  
+  .newSurveyDialog {
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .newSurveyDates {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 2rem;
+  }
+  
+  .newSurveyItem {
+    margin-top: 0.5rem !important;
+  }
+  
+  .newSurveyOptions {
+    display: flex;
+    flex-direction: column;
+    max-height: 16rem;
+    min-height: 4rem;
+    overflow: auto;
+    align-content: center;
+  }
+  
+  .newSurveyOptionItem {
+    display: flex;
+  }
+  
+  .newSurveyOptionText {
+    flex-grow: 1;
+    margin-right: 1rem !important;
+    margin-left: 1rem !important;
+  }
+  
+  .newSurveyAddOptionButton {
+    width: 2rem;
+    height: 2rem;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    border-radius: 50% !important;
+    margin-top: 0.5rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 1.2rem !important;
+  }
+  
+  .newSurveyRemoveOptionButton {
+    width: 2rem;
+    height: 2rem;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    border-radius: 50% !important;
+    font-size: 1.2rem !important;
+  }

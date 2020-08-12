@@ -12,7 +12,9 @@ import {Home} from "./pages/Home";
 import history from './history';
 import {Signup} from "./pages/Signup";
 import {User} from "./pages/User";
+import {NewSurveyDialog} from "./components/NewSurveyDialog";
 import './fonts.css';
+import './style/NewSurvey.css';
 // Server host
 const host = 'http://localhost:8081';
 
@@ -32,6 +34,15 @@ function App() {
     const [user, setUser] = useState(null);
     const [isInSearch, setIsInSearch] = useState(false);
     const [searchText, setSearchText] = useState("");
+    // new survey states
+    const [newSurveyStartingDate, setNewSurveyStartingDate] = useState(null);
+    const [newSurveyDueDate, setNewSurveyDueDate] = useState(null);
+    const [newSurveyExplanation, setNewSurveyExplanation] = useState(null);
+    const [newSurveyTitle, setNewSurveyTitle] = useState(null);
+    const [newSurveyPosterId, setNewSurveyPosterId] = useState(null);
+    const [newSurveyOptions, setNewSurveyOptions] = useState([]);
+    const [newSurveyTags, setNewSurveyTags] = useState([]);
+    const [isNewSurveyOpen, setNewSurvey] = useState(false);
 
     let tmp_searchText;
 
@@ -179,6 +190,68 @@ function App() {
         handleAvatarMenuClose();
     };
 
+    // new survey handles
+    const handleNewSurveyStartingDate = (e) => {
+        setNewSurveyStartingDate(e.target.value);
+    };
+    
+    const handleNewSurveyDueDate = (e) => {
+        setNewSurveyDueDate(e.target.value);
+    };
+    
+    const handleNewSurveyExplanation = (e) => {
+        setNewSurveyExplanation(e.target.value);
+    };
+    
+    const handleNewSurveyTitle = (e) => {
+        setNewSurveyTitle(e.target.value);
+    };
+    
+    const handleNewSurveyPosterId = (e) => {
+        setNewSurveyPosterId(e.target.value);
+    };
+    
+    const handleNewSurveyOptionsAdd = (e) => {
+        setNewSurveyOptions([...newSurveyOptions, ""]);
+    };
+    
+    const handleNewSurveyOptionsChange = (e, index) => {
+        newSurveyOptions.splice(index, 1, e.target.value);
+        setNewSurveyOptions([...newSurveyOptions]);
+    };
+    
+    const handleNewSurveyOptionsRemove = (e, index) => {
+        newSurveyOptions.splice(index, 1)
+        setNewSurveyOptions([...newSurveyOptions]);
+    };
+    
+    const handleNewSurveyTags = (e) => {
+        setNewSurveyTags(e.target.value.split(',').map(s => s.trim()).filter(s => s != ""));
+    };
+
+    const clearNewSurvey = () => {
+        setNewSurveyStartingDate(null);
+        setNewSurveyDueDate(null);
+        setNewSurveyExplanation(null);
+        setNewSurveyTitle(null);
+        setNewSurveyPosterId(null);
+        setNewSurveyOptions([]);
+        setNewSurveyTags([]);
+    }
+
+    const openNewSurvey = () => {
+        setNewSurvey(true);
+    };
+
+    const closeNewSurvey = () => {
+        setNewSurvey(false);
+        clearNewSurvey();
+    };
+
+    const postNewSurvey = () => {
+        //TODO
+    };
+
     // Custom styles
     const loginTextField = {
         color: '#9FAFC1',
@@ -225,9 +298,14 @@ function App() {
                             <Link className={'signUp'} to="/sign-up">
                                 Kayıt ol
                             </Link>
-                        </form> : <Button className={'profileButton'} type={'submit'} onClick={handleAvatarClick} aria-controls={'avatar_menu'}>
-                            <img className={'profileImage'} src = 'profile.jpg' />
-                        </Button>}
+                        </form> : <div style={{display: "flex", marginLeft: "auto"}}>
+                            <div className={"newSurvey"}>
+                                <Button className={"newSurveyButton"} onClick={openNewSurvey} color="primary" variant="contained">YENİ ANKET</Button>
+                            </div>
+                            <Button className={'profileButton'} type={'submit'} onClick={handleAvatarClick} aria-controls={'avatar_menu'}>
+                                <img className={'profileImage'} src = 'profile.jpg' />
+                            </Button>
+                        </div>}
 
                         {user && <Menu
                             id={'avatar_menu'}
@@ -259,6 +337,16 @@ function App() {
                 {/*User login olduysa gidebileceği profil sayfası*/}
                 {user && <Route path={'/user/:id'} component={User}/>}
             </Router>
+
+            <NewSurveyDialog newSurveyStartingDate={newSurveyStartingDate} newSurveyDueDate={newSurveyDueDate} 
+                             newSurveyExplanation={newSurveyExplanation} newSurveyTitle={newSurveyTitle} 
+                             newSurveyPosterId={newSurveyPosterId} newSurveyOptions={newSurveyOptions} 
+                             newSurveyTags={newSurveyTags} handleNewSurveyStartingDate={handleNewSurveyStartingDate} 
+                             handleNewSurveyDueDate={handleNewSurveyDueDate} handleNewSurveyExplanation={handleNewSurveyExplanation} 
+                             handleNewSurveyTitle={handleNewSurveyTitle} handleNewSurveyPosterId={handleNewSurveyPosterId} 
+                             handleNewSurveyOptionsAdd={handleNewSurveyOptionsAdd} handleNewSurveyOptionsChange={handleNewSurveyOptionsChange} 
+                             handleNewSurveyOptionsRemove={handleNewSurveyOptionsRemove} handleNewSurveyTags={handleNewSurveyTags} 
+                             isNewSurveyOpen={isNewSurveyOpen} closeNewSurvey={closeNewSurvey} postNewSurvey={postNewSurvey}/>
 
             <AppFooter/>
         </div>
