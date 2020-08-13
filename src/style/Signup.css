@@ -1,0 +1,20 @@
+  .signupDialog {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signupDialogPass {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 30px;
+  }
+  
+  .signupDialogSex {
+    display: grid;
+    grid-row-gap: 6px;
+    margin-top: 20px;
+  }
+
+  .signupItem {
+      margin-top: 0.5rem !important;
+  }

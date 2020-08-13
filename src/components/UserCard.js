@@ -42,7 +42,23 @@ export const UserCard = (props) => {
             .then(res => {
                 setOpen(true);
                 setMessage(user.username + ' kullanıcı takipten çıkarıldı..');
-                getFollowedUsers();
+                getFollowedUsers && getFollowedUsers();
+            })
+            .catch(err => {
+                setOpen(true);
+                setMessage(err.message);
+            })
+    };
+
+    const follow = () => {
+        axios.post(host + '/user/follow',{
+            followerId: curUserId,
+            followedId: user.id
+        })
+            .then(res => {
+                setOpen(true);
+                setMessage(user.username + ' kullanıcı takip edildi..');
+                getFollowedUsers && getFollowedUsers();
             })
             .catch(err => {
                 setOpen(true);
