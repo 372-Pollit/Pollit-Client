@@ -103,6 +103,18 @@
 .MesajlarLink .Mesajlar {
   height: 100%;
 }
+.ModeratorLink {
+  text-decoration: none;
+}
+.ModeratorLink .Moderator {
+  height: 100%;
+}
+.AdminLink {
+  text-decoration: none;
+}
+.AdminLink .Admin {
+  height: 100%;
+}
 .logoutLink {
   text-decoration: none;
 }

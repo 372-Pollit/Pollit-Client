@@ -11,6 +11,8 @@ import {AppFooter} from "./components/AppFooter";
 import {Home} from "./pages/Home";
 import history from './history';
 import {User} from "./pages/User";
+import {Moderator} from "./pages/Moderator";
+import {Admin} from "./pages/Admin";
 import {NewSurveyDialog} from "./components/NewSurveyDialog";
 import {Signup} from "./components/Signup";
 import './fonts.css';
@@ -35,6 +37,8 @@ function App() {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
+    const [admin, setAdmin] = useState(null);
+    const [moderator, setModerator] = useState(null);
     const [user, setUser] = useState(null);
     const [isInSearch, setIsInSearch] = useState(false);
     const [isUserSearch, setIsUserSearch] = useState(false);
@@ -328,7 +332,6 @@ function App() {
             }
         })
             .then(res => {
-
                 if (res.data==='') {
                     alert('hatali giris');
                 }
@@ -349,19 +352,56 @@ function App() {
                     setPageNumber(0);
                     setSurveys([]);
                 }
-
             })
             .catch(err => {
                 setError(err);
-                alert('ops');
+                alert('ops1');
             });
 
     };
+
+    useEffect(() => {
+        if (user) {
+            axios.get(host + '/moderator/isModerator', {
+                params: {
+                    id: user.id
+                }
+            })
+                .then(res => {
+                    if (!(res.data===''))
+                        setModerator(res.data);
+                })
+                .catch(err => {
+                    setError(err);
+                    alert('ops2');
+                });
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if (moderator) {
+            axios.get(host + '/admin/isAdmin', {
+                params: {
+                    id: user.id
+                }
+            })
+                .then(res => {
+                    if (!(res.data===''))
+                        setAdmin(res.data);
+                })
+                .catch(err => {
+                    setError(err);
+                    alert('ops3');
+                });
+        }
+    }, [moderator]);
 
     const logout = () => {
         setPageNumber(0);
         setSurveys([]);
         setUser(null);
+        setModerator(null);
+        setAdmin(null);
         handleAvatarMenuClose();
         localStorage.removeItem('birthDate');
         localStorage.removeItem('blocked');
@@ -607,6 +647,12 @@ function App() {
                         {user && <LinkRouter className={'MesajlarLink'} to={`/messages/${user.id}`}>
                             <Tab className={'Mesajlar'} label={'Mesajlar'}/>
                         </LinkRouter>}
+                        {moderator && <Link className={'ModeratorLink'} to={`/moderator/${user.id}`}>
+                            <Tab className={'Moderator'} label={'Moderator'}/>
+                        </Link>}
+                        {admin && <Link className={'AdminLink'} to={`/admin/${user.id}`}>
+                            <Tab className={'Admin'} label={'Admin'}/>
+                        </Link>}
                         <Menu
                             id={'categories_menu'}
                             anchorEl={anchorEl}
@@ -670,6 +716,8 @@ function App() {
                 {!user && <Route path={'/sign-up'} component={Signup}/>}
                 {/*User login olduysa gidebileceği profil sayfası*/}
                 {user && <Route path={'/messages/:id'} component={Messages}/>}
+                {moderator && <Route path={'/moderator/:id'} component={Moderator}/>}
+                {admin && <Route path={'/admin/:id'} component={Admin}/>}
             </Router>
 
             <NewSurveyDialog newSurveyStartingDate={newSurveyStartingDate} newSurveyDueDate={newSurveyDueDate}

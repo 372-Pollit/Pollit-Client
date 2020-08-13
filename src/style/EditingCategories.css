@@ -1,0 +1,20 @@
+.EditingCategories {
+  display: flex;
+  flex-wrap: wrap;
+}
+.EditingCategories .CategoryCard {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin-top: 2rem;
+}
+.EditingCategories .CategoryCard h4 {
+  margin: 2rem;
+}
+.EditingCategories .CategoryCard button {
+  margin-right: 1rem;
+  margin-left: auto;
+  color: white;
+  background: crimson;
+}
+/*# sourceMappingURL=EditingCategories.css.map */
