@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { Router, Switch,Route, Link } from 'react-router-dom'
+import { Router, Switch,Route, Link as LinkRouter } from 'react-router-dom'
 import './App.css';
-import {AppBar, Tabs, Tab, Menu, MenuItem } from '@material-ui/core';
+import {AppBar, Tabs, Tab, Menu, MenuItem, Link as LinkMaterial } from '@material-ui/core';
 import './style/home.css';
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
@@ -39,8 +39,8 @@ function App() {
     const [isUserSearch, setIsUserSearch] = useState(false);
     const [searchText, setSearchText] = useState("");
     // new survey states
-    const [newSurveyStartingDate, setNewSurveyStartingDate] = useState(null);
-    const [newSurveyDueDate, setNewSurveyDueDate] = useState(null);
+    const [newSurveyStartingDate, setNewSurveyStartingDate] = useState(new Date().toISOString().substring(0,16));
+    const [newSurveyDueDate, setNewSurveyDueDate] = useState(new Date().toISOString().substring(0,16));
     const [newSurveyExplanation, setNewSurveyExplanation] = useState(null);
     const [newSurveyTitle, setNewSurveyTitle] = useState(null);
     const [newSurveyPosterId, setNewSurveyPosterId] = useState(null);
@@ -54,7 +54,7 @@ function App() {
     const [signupEmail, setSignupEmail] = useState(null);
     const [signupPassword, setSignupPassword] = useState(null);
     const [signupPasswordAgain, setSignupPasswordAgain] = useState(null);
-    const [signupBdate, setSignupBdate] = useState(null);
+    const [signupBdate, setSignupBdate] = useState(new Date().toISOString().substring(0,16));
     const [signupSex, setSignupSex] = useState(null);
     const [isSignupOpen, setSignup] = useState(false);
 
@@ -69,6 +69,28 @@ function App() {
         setIsLoading(true);
         setIsInSearch(false);
         setIsUserSearch(false);
+        let tmpbirthDate = localStorage.getItem('birthDate');
+        let tmpblocked = localStorage.getItem('blocked');
+        let tmpemail = localStorage.getItem('email');
+        let tmpfirstName = localStorage.getItem('firstName');
+        let tmpid = localStorage.getItem('id');
+        let tmplastName = localStorage.getItem('lastName');
+        let tmppassword = localStorage.getItem('password');
+        let tmpregisterDate = localStorage.getItem('registerDate');
+        let tmpsex = localStorage.getItem('sex');
+        let tmpusername = localStorage.getItem('username');
+        setUser({
+            birthDate: tmpbirthDate,
+            blocked: tmpblocked,
+            email: tmpemail,
+            firstName: tmpfirstName,
+            id: tmpid,
+            lastName: tmplastName,
+            password: tmppassword,
+            registerDate: tmpregisterDate,
+            sex: tmpsex,
+            username: tmpusername
+        });
         // Sunucudan kategorileri alıyoruz
         axios.get(host + '/category/findAll')
             .then(res => {
@@ -268,6 +290,17 @@ function App() {
                 else {
                     alert(`hi ${res.data.username}`);
                     setUser(res.data);
+                    console.log(res.data);
+                    localStorage.setItem('birthDate', res.data.birthDate);
+                    localStorage.setItem('blocked', res.data.blocked);
+                    localStorage.setItem('email', res.data.email);
+                    localStorage.setItem('firstName', res.data.firstName);
+                    localStorage.setItem('id', res.data.id);
+                    localStorage.setItem('lastName', res.data.lastName);
+                    localStorage.setItem('password', res.data.password);
+                    localStorage.setItem('registerDate', res.data.registerDate);
+                    localStorage.setItem('sex', res.data.sex);
+                    localStorage.setItem('username', res.data.username);
                 }
 
             })
@@ -281,6 +314,16 @@ function App() {
     const logout = () => {
         setUser(null);
         handleAvatarMenuClose();
+        localStorage.removeItem('birthDate');
+        localStorage.removeItem('blocked');
+        localStorage.removeItem('email');
+        localStorage.removeItem('firstName');
+        localStorage.removeItem('id');
+        localStorage.removeItem('lastName');
+        localStorage.removeItem('password');
+        localStorage.removeItem('registerDate');
+        localStorage.removeItem('sex');
+        localStorage.removeItem('username');
     };
 
     const profile = () => {
@@ -487,16 +530,16 @@ function App() {
                 <AppBar>
                     <Tabs className={"tabBar"}>7
                         <img className={'logo'} src="/logo.png" alt="logo" href={'/'}/>
-                        <Link className={'AnasayfaLink'} to="/">
+                        <LinkRouter className={'AnasayfaLink'} to="/">
                             <Tab className={'Anasayfa'} label={'Anasayfa'}/>
-                        </Link>
+                        </LinkRouter>
                         <Tab label={'Kategoriler'} onClick={handleClick} aria-controls={'categories_menu'}/>
-                        {user && <Link className={'PopülerLink'} to="/">
+                        {user && <LinkRouter className={'PopülerLink'} to="/">
                             <Tab className={'Popüler'} label={'Popüler'}/>
-                        </Link>}
-                        {user && <Link className={'MesajlarLink'} to={`/messages/${user.id}`}>
+                        </LinkRouter>}
+                        {user && <LinkRouter className={'MesajlarLink'} to={`/messages/${user.id}`}>
                             <Tab className={'Mesajlar'} label={'Mesajlar'}/>
-                        </Link>}
+                        </LinkRouter>}
                         <Menu
                             id={'categories_menu'}
                             anchorEl={anchorEl}
@@ -517,9 +560,9 @@ function App() {
                                        onChange={event => setPassword(event.target.value)} variant={'outlined'}
                                        inputProps={loginTextField}/>
                             <Button className={'loginButton'} type={'submit'}>Giriş</Button>
-                            <Link className={'signUp'} onClick={openSignup}>
+                            <LinkRouter className={'signUp'} onClick={openSignup}>
                                 Kayıt ol
-                            </Link>
+                            </LinkRouter>
                         </form> : <div style={{display: "flex", marginLeft: "auto"}}>
                             <div className={"newSurvey"}>
                                 <Button className={"newSurveyButton"} onClick={openNewSurvey} color="primary" variant="contained">YENİ ANKET</Button>
@@ -536,17 +579,17 @@ function App() {
                             open={Boolean(anchorElAvatarMenu)}
                             onClose={handleAvatarMenuClose}
                         >
-                            <Link className={'profileLink'} to={"/user/"+user.id} onClick={profile}>
+                            <LinkMaterial className={'profileLink'} href={"/user/"+user.id} onClick={profile}>
                                 <MenuItem className={'profile'}>
                                     Profil
                                 </MenuItem>
-                            </Link>
+                            </LinkMaterial>
                             <MenuItem onClick={handleAvatarMenuClose}>Ayarlar</MenuItem>
-                            <Link className={'logoutLink'} onClick={logout} to={"/"}>
+                            <LinkRouter className={'logoutLink'} onClick={logout} to={"/"}>
                                 <MenuItem className={'logout'}>
                                     Çıkış
                                 </MenuItem>
-                            </Link>
+                            </LinkRouter>
                         </Menu>}
 
                     </Tabs>
@@ -556,9 +599,9 @@ function App() {
                        component={() => <Home searchText={searchText} surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
                                               isUserSearch={isUserSearch} users={users} surveyLoading={surveyLoading}
                                               isLoggedIn={!!user} curUser={user} handleChange={handleChange}/>}/>
+                <Route path={'/user/:id'} component={User}/>
                 {!user && <Route path={'/sign-up'} component={Signup}/>}
                 {/*User login olduysa gidebileceği profil sayfası*/}
-                {user && <Route path={'/user/:id'} component={User}/>}
                 {user && <Route path={'/messages/:id'} component={Messages}/>}
             </Router>
 

@@ -31,9 +31,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 const host = 'http://localhost:8081';
 const tabs = ["Anketlerim", "Takip Ettiklerim", "Takipçilerim", "Abonelikler"];
+const tabsOther = ["Anketler", "Takip Edilenler", "Takipçiler", "Abonelikler"];
 
 export const User = (props) => {
     const userId = props.match.params.id;
+    const currUserId = localStorage.getItem('id');
     const [user, setUser] = useState(null);
     const [err, setErr] = useState(null);
     const [tab, setTab] = useState(0);
@@ -120,7 +122,7 @@ export const User = (props) => {
                         <Typography className={'sex'}
                                     component={'h5'}><span>Cinsiyet:</span> {user.sex}</Typography>
                     </CardContent>}
-                    {edit && !editLoading && <CardContent className="UserData">
+                    {edit && !editLoading && userId === currUserId && <CardContent className="UserData">
                         <form action="" onSubmit={handleSubmit} className={'UserEditForm'}>
                             <FormGroup className={'form_1'}>
                                 <TextField defaultValue={editUser.firstName} name={'firstName'}
@@ -161,8 +163,8 @@ export const User = (props) => {
                     <CardActions style={{
                         alignItems: 'flex-start'
                     }}>
-                        {!edit && <Button onClick={() => setEdit(true)}><EditIcon color={'primary'}/></Button>}
-                        {edit &&
+                        {!edit && userId === currUserId && <Button onClick={() => setEdit(true)}><EditIcon color={'primary'}/></Button>}
+                        {edit && userId === currUserId &&
                         <Button onClick={() => {
                             setEdit(false);
                         }}>
@@ -174,7 +176,11 @@ export const User = (props) => {
                 </Card>
                 <Tabs value={tab} className={'tabs'} indicatorColor="primary"
                       textColor="primary" onChange={handleChange} centered={true}>
-                    {tabs.map(tab => (
+                    {userId === currUserId ? 
+                    tabs.map(tab => (
+                        <Tab className={'tab'} label={tab}/>
+                    )) :
+                    tabsOther.map(tab => (
                         <Tab className={'tab'} label={tab}/>
                     ))}
                 </Tabs>
