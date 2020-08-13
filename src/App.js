@@ -17,6 +17,7 @@ import './fonts.css';
 import {Messages} from "./pages/Messages";
 import './style/NewSurvey.css';
 import './style/Signup.css';
+import {InfoDialog} from "./components/InfoDialog";
 // Server host
 const host = 'http://localhost:8081';
 
@@ -60,6 +61,9 @@ function App() {
     const [isPopular, setIsPopular] = useState(false);
     const [searchCategory, setSearchCategory] = useState(false);
     const [categoryId, setCategoryId] = useState(null);
+
+    const [infoMessage, setInfoMessage] = useState("");
+    const [infoDialogOpen, setInfoDialogOpen] = useState();
 
     let tmp_searchText = "";
 
@@ -397,10 +401,6 @@ function App() {
         clearNewSurvey();
     };
 
-    const postNewSurvey = () => {
-        //TODO
-    };
-
     //signup handles
     const openSignup = () => {
         setSignup(true);
@@ -448,6 +448,28 @@ function App() {
 
     const handleSignupBdate = (e) => {
         setSignupBdate(e.target.value);
+    };
+
+    const postNewSurvey = () => {
+        axios.post(host + '/survey/post', {
+            title: newSurveyTitle,
+            explanation: newSurveyExplanation,
+            dueDate: newSurveyDueDate,
+            options: newSurveyOptions,
+            posterId: user.id,
+            tags: newSurveyTags,
+            startDate: newSurveyStartingDate
+        })
+            .then(res => {
+                setInfoDialogOpen(true);
+                setInfoMessage("Anket başarıyla yayınlandı");
+                setNewSurvey(false);
+            })
+            .catch(err => {
+                setInfoDialogOpen(true);
+                setInfoMessage("Anket yayınlanırken hata oluştu:" + err.message );
+                setNewSurvey(false);
+            })
     };
 
     const handleSignupSex = (e) => {
@@ -626,7 +648,7 @@ function App() {
                     handleSignupPasswordAgain={handleSignupPasswordAgain} signupBdate={signupBdate}
                     handleSignupBdate={handleSignupBdate} signupSex={signupSex}
                     handleSignupSex={handleSignupSex} handleSignupSubmit={handleSignupSubmit}/>
-
+            <InfoDialog id={'HomePageInfoDialog'} message={infoMessage} setIsOpen={setInfoDialogOpen} isOpen={infoDialogOpen}/>
             <AppFooter/>
         </div>
     );
