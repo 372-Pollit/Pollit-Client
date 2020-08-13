@@ -41,9 +41,27 @@ export const Messages = (props) => {
      * activeUser means that the user your are chatting at the moment
      */
     const [activeUser, setActiveUser] = useState(null);
+    // const [intervalId, setIntervalId] = useState();
+    const [intervals, setIntervals] = useState([]);
+
+    let intervalId;
 
     useEffect(() => {
-        setInterval(getMessagedUsers, 200);
+        let tmp = intervals;
+        let i = setInterval(getMessagedUsers, 200);
+        intervalId = i;
+        console.log(i);
+        return () => {
+            console.log('unmounting');
+            console.log(intervalId);
+            clearInterval(intervalId);
+        }
+    }, []);
+    useEffect(() => {
+        return () => {
+            console.log("interval for list: " + intervalId);
+
+        }
     }, []);
 
     const getMessagedUsers = () => {
@@ -167,6 +185,7 @@ const Chat = (props) => {
     const [infoMessage, setInfoMessage] = useState("");
     const [intervalId, setIntervalId] = useState(null);
 
+    let tmp_intervalId;
 
     useEffect(() => {
         setMessages([]);
@@ -174,8 +193,17 @@ const Chat = (props) => {
             clearInterval(intervalId);
         }
         let tmp = setInterval(getMessages, 200);
+        tmp_intervalId = tmp;
         setIntervalId(tmp);
     }, [activeUser]);
+
+    useEffect(() => {
+        return () => {
+            console.log('unmounting');
+            console.log(tmp_intervalId);
+            clearInterval(tmp_intervalId);
+        }
+    }, []);
 
     const getMessages = () => {
         axios.get(host + "/messages/chat", {
