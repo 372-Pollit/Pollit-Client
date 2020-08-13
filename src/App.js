@@ -25,15 +25,17 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [input, setInput] = useState(null);
     const [surveys, setSurveys] = useState([]);
+    const [users, setUsers] = useState([]);
     const [surveyLoading, setSurveyLoading] = useState(false);
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
     const [user, setUser] = useState(null);
     const [isInSearch, setIsInSearch] = useState(false);
+    const [isUserSearch, setIsUserSearch] = useState(false);
     const [searchText, setSearchText] = useState("");
 
-    let tmp_searchText;
+    let tmp_searchText = "";
 
 
     // Mounting functions
@@ -43,6 +45,7 @@ function App() {
     useEffect(() => {
         setIsLoading(true);
         setIsInSearch(false);
+        setIsUserSearch(false);
         // Sunucudan kategorileri alıyoruz
         axios.get(host + '/category/findAll')
             .then(res => {
@@ -60,27 +63,50 @@ function App() {
     //Custom functions
     const getSurveys = () => {
         console.log(isInSearch);
+        setSurveyLoading(true);
         if (isInSearch) {
-            setSurveyLoading(true);
-            axios.get(host + '/survey/search', {
-                params: {
-                    search: searchText,
-                    pageNumber: pageNumber,
-                }
-            })
-                .then(res => {
-                    setPageNumber(pageNumber + 1);
 
-                    setSurveys(surveys.concat(res.data));
-                    setSurveyLoading(false);
+            if (isUserSearch) {
+
+                axios.get(host + '/user/search', {
+                    params: {
+                        searchString: searchText,
+                        pageNumber: pageNumber,
+                    }
                 })
-                .catch(err => {
-                    setSurveyLoading(false);
-                    setError(err);
+                    .then(res => {
+                        setPageNumber(pageNumber + 1);
+                        setUsers(users.concat(res.data));
+                        setSurveyLoading(false);
+                    })
+                    .catch(err => {
+                        setSurveyLoading(false);
+                        setError(err);
+                    })
+
+            }
+
+            else {
+
+                axios.get(host + '/survey/search', {
+                    params: {
+                        search: searchText,
+                        pageNumber: pageNumber,
+                    }
                 })
+                    .then(res => {
+                        setPageNumber(pageNumber + 1);
+                        setSurveys(surveys.concat(res.data));
+                        setSurveyLoading(false);
+                    })
+                    .catch(err => {
+                        setSurveyLoading(false);
+                        setError(err);
+                    })
+
+            }
 
         } else {
-            setSurveyLoading(true);
             axios.get(host + '/survey/trends', {
                 params: {
                     pageNumber: pageNumber,
@@ -126,21 +152,47 @@ function App() {
         setSurveyLoading(true);
         setIsInSearch(true);
         setSearchText(tmp_searchText);
-        axios.get(host + '/survey/search', {
-            params: {
-                search: tmp_searchText,
-                pageNumber: 0,
-            }
-        })
-            .then(res => {
-                setPageNumber(1);
-                setSurveys(res.data);
-                setSurveyLoading(false);
+        setIsUserSearch(tmp_searchText.toString().charAt(0)==="@");
+
+        if (isUserSearch) {
+
+            axios.get(host + '/user/search', {
+                params: {
+                    searchString: tmp_searchText,
+                    pageNumber: 0,
+                }
             })
-            .catch(err => {
-                setSurveyLoading(false);
-                setError(err);
+                .then(res => {
+                    setPageNumber(1);
+                    setUsers(res.data);
+                    setSurveyLoading(false);
+                })
+                .catch(err => {
+                    setSurveyLoading(false);
+                    setError(err);
+                })
+
+        }
+
+        else {
+
+            axios.get(host + '/survey/search', {
+                params: {
+                    search: tmp_searchText,
+                    pageNumber: 0,
+                }
             })
+                .then(res => {
+                    setPageNumber(1);
+                    setSurveys(res.data);
+                    setSurveyLoading(false);
+                })
+                .catch(err => {
+                    setSurveyLoading(false);
+                    setError(err);
+                })
+
+        }
 
     };
 
@@ -179,6 +231,14 @@ function App() {
         handleAvatarMenuClose();
     };
 
+    const profile = () => {
+        handleAvatarMenuClose();
+    };
+
+    const anasayfa = () => {
+        setSearchText("");
+    };
+
     // Custom styles
     const loginTextField = {
         color: '#9FAFC1',
@@ -192,7 +252,7 @@ function App() {
                 <AppBar>
                     <Tabs className={"tabBar"}>7
                         <img className={'logo'} src="/logo.png" alt="logo" href={'/'}/>
-                        <Link className={'AnasayfaLink'} to="/">
+                        <Link className={'AnasayfaLink'} to="/" onClick={anasayfa}>
                             <Tab className={'Anasayfa'} label={'Anasayfa'}/>
                         </Link>
                         <Tab label={'Kategoriler'} onClick={handleClick} aria-controls={'categories_menu'}/>
@@ -236,13 +296,13 @@ function App() {
                             open={Boolean(anchorElAvatarMenu)}
                             onClose={handleAvatarMenuClose}
                         >
-                            <Link className={'profileLink'} to={"/user/"+user.id}>
+                            <Link className={'profileLink'} to={"/user/"+user.id} onClick={profile}>
                                 <MenuItem className={'profile'}>
                                     Profil
                                 </MenuItem>
                             </Link>
                             <MenuItem onClick={handleAvatarMenuClose}>Ayarlar</MenuItem>
-                            <Link classNafome={'logoutLink'} onClick={logout} to={"/"}>
+                            <Link className={'logoutLink'} onClick={logout} to={"/"}>
                                 <MenuItem className={'logout'}>
                                     Çıkış
                                 </MenuItem>
@@ -254,7 +314,8 @@ function App() {
                 <Toolbar/>
                 <Route exact path={'/'}
                        component={() => <Home searchText={searchText} surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
-                                              surveyLoading={surveyLoading} handleChange={handleChange}/>}/>
+                                              isUserSearch={isUserSearch} users={users} surveyLoading={surveyLoading}
+                                              isLoggedIn={!!user} curUser={user} handleChange={handleChange}/>}/>
                 {!user && <Route path={'/sign-up'} component={Signup}/>}
                 {/*User login olduysa gidebileceği profil sayfası*/}
                 {user && <Route path={'/user/:id'} component={User}/>}

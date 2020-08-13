@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField/TextField";
 import {Survey} from "../components/Survey";
 import Button from "@material-ui/core/Button";
 import React from "react";
+import {UserCard} from "../components/UserCard";
 
 
 export const Home = (props) => {
@@ -13,6 +14,11 @@ export const Home = (props) => {
     const surveyLoading = props.surveyLoading;
     const handleSubmit = props.handleSubmit;
     const searchText = props.searchText;
+    const isUserSearch = props.isUserSearch;
+    const users = props.users;
+    const curUser = props.curUser;
+    const isLoggedIn = props.isLoggedIn;
+
     return (
         <Container maxWidth={'md'}>
             <form className={'searchForm'} action="" onSubmit={handleSubmit}>
@@ -20,8 +26,14 @@ export const Home = (props) => {
                 ' @username, ...'}
                            id="outlined-basic" label="Arama" variant="outlined"  onChange={(e) => handleChange(e)}/>
             </form>
-            {surveys.map(survey => (
+            {!isUserSearch && surveys.map(survey => (
                 <Survey data={survey}/>
+            ))}
+            {isUserSearch && isLoggedIn && users.map(user => (
+                <UserCard curUserId={curUser.id} user={user}/>
+            ))}
+            {isUserSearch && !isLoggedIn && users.map(user => (
+                <UserCard user={user}/>
             ))}
             {(surveyLoading) && <CircularProgress/>}
             {!surveyLoading && <Button variant={'contained'} className={'loadMoreButton'} onClick={getSurveys}>Daha fazla...</Button>}
