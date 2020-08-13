@@ -58,6 +58,8 @@ function App() {
     const [signupSex, setSignupSex] = useState(null);
     const [isSignupOpen, setSignup] = useState(false);
     const [isPopular, setIsPopular] = useState(false);
+    const [searchCategory, setSearchCategory] = useState(false);
+    const [categoryId, setCategoryId] = useState(null);
 
     let tmp_searchText = "";
 
@@ -115,11 +117,9 @@ function App() {
                     .catch(err => {
                         setSurveyLoading(false);
                         setError(err);
-                    })
+                    });
 
-            }
-
-            else {
+            } else {
 
                 axios.get(host + '/survey/search', {
                     params: {
@@ -135,12 +135,12 @@ function App() {
                     .catch(err => {
                         setSurveyLoading(false);
                         setError(err);
-                    })
+                    });
 
             }
 
         } else {
-            if (user && !isPopular) {
+            if (user && !isPopular && !searchCategory) {
                 setSurveyLoading(true);
                 axios.get(host + '/survey/forUser', {
                     params: {
@@ -158,8 +158,25 @@ function App() {
                         setError(err);
                     });
 
-            }
-            else {
+            } else if (searchCategory) {
+                axios.get(host + '/survey/searchByCategory', {
+                    params: {
+                        pageNumber: pageNumber,
+                        categoryId: categoryId
+                    }
+                })
+                    .then(res => {
+                        if (res.data.lenght !== 0) {
+                            setPageNumber(pageNumber + 1);
+                        }
+                        setSurveys(surveys.concat(res.data));
+                        setSurveyLoading(false);
+                    })
+                    .catch(err => {
+                        setError(err);
+                        setSurveyLoading(false);
+                    })
+            } else {
                 setSurveyLoading(true);
                 axios.get(host + '/survey/trends', {
                     params: {
@@ -195,7 +212,20 @@ function App() {
 
     };
 
-    const handleClose = () => {
+    const setAllToFalse = () => {
+        setIsPopular(false);
+        setSearchCategory(false);
+        setIsInSearch(false);
+        setIsUserSearch(false);
+        setSearchCategory(false);
+    };
+
+    const handleClose = (id) => {
+        setPageNumber(0);
+        setCategoryId(id);
+        setAllToFalse();
+        setSearchCategory(true);
+        setSurveys([]);
         setAnchorEl(null);
     };
 
@@ -253,6 +283,7 @@ function App() {
     };
 
     const setPopular = () => {
+        setAllToFalse();
         setIsPopular(true);
         setPageNumber(0);
         setSurveys([]);
@@ -280,7 +311,6 @@ function App() {
                     setUser(res.data);
                     setPageNumber(0);
                     setSurveys([]);
-
                 }
 
             })
@@ -304,9 +334,8 @@ function App() {
 
     const anasayfa = () => {
         setSearchText("");
-        setIsPopular(false);
         setPageNumber(0);
-        setIsInSearch(false);
+        setAllToFalse();
         setSurveys([]);
     };
 
@@ -391,7 +420,7 @@ function App() {
         setSignupPasswordAgain(null);
         setSignupBdate(null);
         setSignupSex(null);
-    }
+    };
 
     const handleSignupFname = (e) => {
         setSignupFname(e.target.value);
@@ -428,70 +457,67 @@ function App() {
     const handleSignupSubmit = (e) => {
         e.preventDefault();
         axios.get(host + '/user/findByUsername', {
-            params: { username: signupUname }
+            params: {username: signupUname}
         })
-        .then(res1 => {
-            if (res1.data === '') {
-                axios.get(host + '/user/findByEmail', {
-                    params: { email: signupEmail }
-                })
-                .then(res2 => {
-                    if (res2.data === '') {
-                        axios.post(host + '/user/signup', {
-                            username: signupUname,
-                            password: signupPassword,
-                            email: signupEmail,
-                            first_name: signupFname,
-                            last_name: signupLname,
-                            sex: signupSex,
-                            birth_date: signupBdate
-                        })
-                        .then(res => {
-                            closeSignup();
-                            axios.get(host + '/user/isUser', {
-                                params: {
-                                    username: username,
-                                    password: password
-                                }
-                            })
-                                .then(res3 => {
-
-                                    if (res3.data==='') {
-                                        alert('hatali giris');
-                                    }
-                                    else {
-                                        alert(`hi ${res3.data.username}`);
-                                        setUser(res3.data);
-                                    }
-
+            .then(res1 => {
+                if (res1.data === '') {
+                    axios.get(host + '/user/findByEmail', {
+                        params: {email: signupEmail}
+                    })
+                        .then(res2 => {
+                            if (res2.data === '') {
+                                axios.post(host + '/user/signup', {
+                                    username: signupUname,
+                                    password: signupPassword,
+                                    email: signupEmail,
+                                    first_name: signupFname,
+                                    last_name: signupLname,
+                                    sex: signupSex,
+                                    birth_date: signupBdate
                                 })
-                                .catch(err => {
-                                    setError(err);
-                                    alert('sgnlgn');
-                                });
+                                    .then(res => {
+                                        closeSignup();
+                                        axios.get(host + '/user/isUser', {
+                                            params: {
+                                                username: username,
+                                                password: password
+                                            }
+                                        })
+                                            .then(res3 => {
+
+                                                if (res3.data === '') {
+                                                    alert('hatali giris');
+                                                } else {
+                                                    alert(`hi ${res3.data.username}`);
+                                                    setUser(res3.data);
+                                                }
+
+                                            })
+                                            .catch(err => {
+                                                setError(err);
+                                                alert('sgnlgn');
+                                            });
+                                    })
+                                    .catch(err => {
+                                        alert("Could not signup");
+                                    })
+                            } else {
+                                alert("E-mail is already in use.");
+                            }
                         })
                         .catch(err => {
-                            alert("Could not signup");
+                            setError(err);
+                            alert('eml');
                         })
-                    }
-                    else {
-                        alert("E-mail is already in use.");
-                    }
-                })
-                .catch(err => {
-                    setError(err);
-                    alert('eml');
-                })
-            }
-            else {
-                alert("Username is already in use.");
-            }
-        })
-        .catch(err => {
-            setError(err);
-            alert('usr');
-        });
-    }
+                } else {
+                    alert("Username is already in use.");
+                }
+            })
+            .catch(err => {
+                setError(err);
+                alert('usr');
+            });
+    };
 
     // Custom styles
     const loginTextField = {
@@ -509,7 +535,7 @@ function App() {
                         <Link className={'AnasayfaLink'} to="/">
                             <Tab className={'Anasayfa'} label={'Anasayfa'} onClick={anasayfa}/>
                         </Link>
-                        <Tab label={'Kategoriler'} aria-controls={'categories_menu'}/>
+                        <Tab label={'Kategoriler'} onClick={handleClick} aria-controls={'categories_menu'}/>
                         {user && <Link className={'PopülerLink'} to="/">
                             <Tab className={'Popüler'} onClick={setPopular} label={'Popüler'}/>
                         </Link>}
@@ -524,7 +550,7 @@ function App() {
                             onClose={handleClose}
                         >
                             {categories && categories.map(category => (
-                                <MenuItem onClick={handleClose}>{category.name}</MenuItem>
+                                <MenuItem onClick={() => handleClose(category.id)}>{category.name}</MenuItem>
                             ))}
 
                         </Menu>
