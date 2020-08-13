@@ -647,12 +647,12 @@ function App() {
                         {user && <LinkRouter className={'MesajlarLink'} to={`/messages/${user.id}`}>
                             <Tab className={'Mesajlar'} label={'Mesajlar'}/>
                         </LinkRouter>}
-                        {moderator && <Link className={'ModeratorLink'} to={`/moderator/${user.id}`}>
+                        {moderator && <LinkRouter className={'ModeratorLink'} to={`/moderator/${user.id}`}>
                             <Tab className={'Moderator'} label={'Moderator'}/>
-                        </Link>}
-                        {admin && <Link className={'AdminLink'} to={`/admin/${user.id}`}>
+                        </LinkRouter>}
+                        {admin && <LinkRouter className={'AdminLink'} to={`/admin/${user.id}`}>
                             <Tab className={'Admin'} label={'Admin'}/>
-                        </Link>}
+                        </LinkRouter>}
                         <Menu
                             id={'categories_menu'}
                             anchorEl={anchorEl}
