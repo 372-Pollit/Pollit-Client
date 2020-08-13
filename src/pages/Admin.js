@@ -30,7 +30,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const host = 'http://localhost:8081';
-const tabs = ["Anketlerim", "Moderator Ekleme", "Moderatorlar", "Kategori Düzenleme"];
+const tabs = [ "Moderator Ekleme", "Moderatorlar", "Kategori Düzenleme"];
 
 export const Admin = (props) => {
     const userId = props.match.params.id;
@@ -180,9 +180,9 @@ export const Admin = (props) => {
                 </Tabs>
                 <div className="main">
                     {
-                        tab === 0 ? <ProfileSurveys userId={user.id}/> :   // anketlerim
-                            tab === 1 ? <AddingModerators userId={user.id}/> :              // takip ettiklerim
-                                tab === 2 ? <EditingModerators userId={user.id}/> :              // takipçilerim
+                          // anketlerim
+                            tab === 0 ? <AddingModerators userId={user.id}/> :              // takip ettiklerim
+                                tab === 1 ? <EditingModerators userId={user.id}/> :              // takipçilerim
                                     <EditingCategories userId={user.id}/>                                  // abonelikler
                     }
                 </div>

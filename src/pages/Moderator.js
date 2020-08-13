@@ -183,9 +183,9 @@ export const Moderator = (props) => {
                 </Tabs>
                 <div className="main">
                     {
-                        tab === 0 ? <BlockedUsers userId={user.id}/> :
-                            tab === 1 ? <BlockedSurveys userId={user.id}/> :
-                                tab === 2 ? <BlockedComments userId={user.id}/> : ""
+                        tab === 0 && <BlockedUsers userId={user.id}/>
+                            // tab === 1 ? <BlockedSurveys userId={user.id}/> :
+                            //     tab === 2 ? <BlockedComments userId={user.id}/> : ""
                     }
                 </div>
                 <InfoDialog id={'UserPageDialog'} message={message} isOpen={isOpen} setIsOpen={setIsOpen}/>
