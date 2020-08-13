@@ -20,6 +20,7 @@ export const Signup = (props) => {
     const handleSignupBdate = props.handleSignupBdate;
     const signupSex = props.signupSex;
     const handleSignupSex = props.handleSignupSex;
+    const handleSignupSubmit = props.handleSignupSubmit;
 
     return (
         <Dialog open={isSignupOpen} onClose={closeSignup} aria-labelledby="signup-dialog" maxWidth={"md"} fullWidth>
@@ -46,7 +47,7 @@ export const Signup = (props) => {
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button onClick={closeSignup} variant={"contained"} color="primary">
+                <Button onClick={handleSignupSubmit} variant={"contained"} color="primary">
                     Kaydol
                 </Button>
                 <Button onClick={closeSignup} variant={"contained"} color="secondary">

@@ -284,7 +284,6 @@ function App() {
         setSignupSex(null);
     }
 
-    // handle signup dialog
     const handleSignupFname = (e) => {
         setSignupFname(e.target.value);
     };
@@ -316,6 +315,74 @@ function App() {
     const handleSignupSex = (e) => {
         setSignupSex(e.target.value);
     };
+
+    const handleSignupSubmit = (e) => {
+        e.preventDefault();
+        axios.get(host + '/user/findByUsername', {
+            params: { username: signupUname }
+        })
+        .then(res1 => {
+            if (res1.data === '') {
+                axios.get(host + '/user/findByEmail', {
+                    params: { email: signupEmail }
+                })
+                .then(res2 => {
+                    if (res2.data === '') {
+                        axios.post(host + '/user/signup', {
+                            username: signupUname,
+                            password: signupPassword,
+                            email: signupEmail,
+                            first_name: signupFname,
+                            last_name: signupLname,
+                            sex: signupSex,
+                            birth_date: signupBdate
+                        })
+                        .then(res => {
+                            closeSignup();
+                            axios.get(host + '/user/isUser', {
+                                params: {
+                                    username: username,
+                                    password: password
+                                }
+                            })
+                                .then(res3 => {
+                    
+                                    if (res3.data==='') {
+                                        alert('hatali giris');
+                                    }
+                                    else {
+                                        alert(`hi ${res3.data.username}`);
+                                        setUser(res3.data);
+                                    }
+                    
+                                })
+                                .catch(err => {
+                                    setError(err);
+                                    alert('sgnlgn');
+                                });
+                        })
+                        .catch(err => {
+                            alert("Could not signup");
+                        })
+                    }
+                    else {
+                        alert("E-mail is already in use.");
+                    }
+                })
+                .catch(err => {
+                    setError(err);
+                    alert('eml');
+                })
+            }
+            else {
+                alert("Username is already in use.");
+            }
+        })
+        .catch(err => {
+            setError(err);
+            alert('usr');
+        });
+    }
 
     // Custom styles
     const loginTextField = {
@@ -420,7 +487,8 @@ function App() {
                     handleSignupEmail= {handleSignupEmail} signupPassword={signupPassword} 
                     handleSignupPassword= {handleSignupPassword} signupPasswordAgain={signupPasswordAgain} 
                     handleSignupPasswordAgain={handleSignupPasswordAgain} signupBdate={signupBdate} 
-                    handleSignupBdate={handleSignupBdate} signupSex={signupSex} handleSignupSex={handleSignupSex} />
+                    handleSignupBdate={handleSignupBdate} signupSex={signupSex} 
+                    handleSignupSex={handleSignupSex} handleSignupSubmit={handleSignupSubmit}/>
 
             <AppFooter/>
         </div>
