@@ -13,52 +13,31 @@ export const AddingModerators = (props) => {
     const userId = props.userId;
 
     // States
-    const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
-    const [followedUsers, setFollowedUsers] = useState(null);
+    const [nonModeratorUsers, setNonModeratorUsers] = useState(null);
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
 
     // Mounting Functions
     useEffect(() => {
-        getFollowedUsers();
+        getNonModeratorUsers();
     }, []);
 
-    // Custom Functions
-    const getUser = () => {
-        axios.get(host + '/user/find', {
-            params: {
-                userId: userId
-            }
-        })
+    const getNonModeratorUsers = () => {
+        axios.get(host + '/user/nonModeratorUsers')
             .then(res => {
-                setUser(res.data);
+                setNonModeratorUsers(res.data);
             })
             .catch(err => {
                 setError(err);
             })
-    };
-
-    const getFollowedUsers = () => {
-        axios.get(host + '/user/followedUsers', {
-            params: {
-                userId: userId
-            }
-        })
-            .then(res => {
-                setFollowedUsers(res.data);
-            })
-            .catch(err => {
-                setError(err);
-            })
-
     };
 
     return (
-        <div className={'FollowedUsers'}>
-            {followedUsers && followedUsers.map(user => (
-                <UserCard isFollowed={true} setMessage={setMessage} setOpen={setOpen}
-                          curUserId={userId} getFollowedUsers={getFollowedUsers} user={user}/>
+        <div className={'NonModeratorUsers'}>
+            {nonModeratorUsers && nonModeratorUsers.map(user => (
+                <UserCard admin={true} moderatorKaldir={false} setMessage={setMessage} setOpen={setOpen}
+                          curUserId={userId} user={user}/>
             ))}
             <InfoDialog setIsOpen={setOpen} message={message} isOpen={open}/>
         </div>

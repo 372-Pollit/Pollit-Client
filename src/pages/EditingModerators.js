@@ -11,6 +11,8 @@ export const EditingModerators = (props) => {
 
     const [moderators, setModerators] = useState([]);
     const [err, setError] = useState(null);
+    const [message, setMessage] = useState("");
+    const [isOpen, setOpen] = useState(false);
 
     // Mounting Functions
     useEffect(() => {
@@ -19,7 +21,7 @@ export const EditingModerators = (props) => {
 
 
     const getModerators = () => {
-        axios.get(host + '/moderator/findAll')
+        axios.get(host + '/user/getModerators')
             .then(res => {
                 setModerators(res.data);
             })
@@ -32,7 +34,8 @@ export const EditingModerators = (props) => {
     return (
         <div className={'Moderators'}>
             {moderators && moderators.map(moderator => (
-                <UserCard admin={true} curUserId={curUserId} user={moderator}/>
+                <UserCard admin={true} curUserId={curUserId} user={moderator} moderatorKaldir={true}
+                setMessage={setMessage} setOpen={setOpen}/>
             ))}
         </div>
     )
