@@ -14,12 +14,16 @@ export const UserCard = (props) => {
     const curUserId = props.curUserId;
     const user = props.user;
     const getFollowedUsers = props.getFollowedUsers;
+    const getBlockedUsers = props.getBlockedUsers;
     const setMessage = props.setMessage;
     const setOpen = props.setOpen;
     const admin = props.admin;
+    const moderator = props.moderator;
 
     const [isCurUserFollowing, setIsCurUserFollowing] = useState(false);
     const [error, setError] = useState(null);
+    const [isBlocked, setIsBlocked] = useState(false);
+    const [isModerator, setIsModerator] = useState(false);
 
     useEffect(() => {
         axios.get(host + '/user/isXFollowingY', {
@@ -35,6 +39,39 @@ export const UserCard = (props) => {
                 setError(err);
             })
     }, []);
+
+    useEffect(() => {
+        getBlocked();
+        getModerator();
+    }, []);
+
+    const getBlocked = () => {
+        axios.get(host + '/user/isBlocked', {
+            params: {
+                id: user.id
+            }
+        })
+            .then(res => {
+                setIsBlocked(res.data);
+            })
+            .catch(err => {
+                setError(err);
+            })
+    }
+
+    const getModerator = () => {
+        axios.get(host + '/moderator/isModerator', {
+            params: {
+                id: curUserId
+            }
+        })
+            .then(res => {
+                setIsModerator(res.data);
+            })
+            .catch(err => {
+                setError(err);
+            })
+    }
 
     const unFollow = () => {
         axios.post(host + '/user/unFollow',{
@@ -72,6 +109,66 @@ export const UserCard = (props) => {
 
     };
 
+    const blockUser = () => {
+        if (!checkBlocked()) {
+            axios.post(host + '/user/blockUser', {
+                moderatorId: curUserId,
+                userId: user.id
+            })
+            .then(res => {
+                setOpen(true);
+                setMessage(user.username + ' kullanıcısı engellendi.');
+                getBlockedUsers && getBlockedUsers();
+                getBlocked();
+            })
+            .catch(err => {
+                setOpen(true);
+                setMessage(err.message);
+            })
+        }
+        else {
+            alert("Kullanıcı zaten engellenmiş.");
+            getBlocked();
+        }
+    };
+
+    const unblockUser = () => {
+        if (!checkBlocked()) {
+            axios.post(host + '/user/unblockUser', {
+                moderatorId: curUserId,
+                userId: user.id
+            })
+            .then(res => {
+                setOpen(true);
+                setMessage(user.username + ' kullanıcısının engeli kaldırıldı.');
+                getBlockedUsers && getBlockedUsers();
+                getBlocked();
+            })
+            .catch(err => {
+                setOpen(true);
+                setMessage(err.message);
+            })
+        }
+        else {
+            alert("Kullanıcı zaten engelli değil.");
+            getBlocked();
+        }
+    };
+
+    const checkBlocked = () => {
+        axios.get(host + '/user/isBlocked', {
+            params: {
+                id: user.id
+            }
+        })
+            .then(res => {
+                return res.data;
+            })
+            .catch(err => {
+                setError(err);
+            })
+    }
+
     return (
         <Paper className={'UserCard'}>
             <Link href={'/user/' + user.id} style={{display: 'flex'}}>
@@ -82,8 +179,10 @@ export const UserCard = (props) => {
                     <Typography component={'h5'}>@{user.username}</Typography>
                 </div>
             </Link>
-            {!admin && isCurUserFollowing && curUserId && <Button className={'unfollowButton'} color={'secondary'} onClick={unFollow}>Takibi Bırak</Button>}
-            {!admin && !isCurUserFollowing && curUserId && <Button className={'followButton'} color={'secondary'} onClick={follow}>Takip Et</Button>}
+            {!admin && !moderator && isCurUserFollowing && curUserId && <Button className={'unfollowButton'} color={'secondary'} onClick={unFollow}>Takibi Bırak</Button>}
+            {!admin && !moderator && !isCurUserFollowing && curUserId && <Button className={'followButton'} color={'secondary'} onClick={follow}>Takip Et</Button>}
+            {isModerator && !isBlocked && <Button className={'blockUserButton'} color={'secondary'} onClick={blockUser}>Kullanıcıyı Engelle</Button>}
+            {isModerator && isBlocked && <Button className={'unblockUserButton'} color={'primary'} onClick={unblockUser}>Kullanıcının Engelini Kaldır</Button>}
             {admin && <Button className={'removeModeratorButton'} color={'secondary'} onClick={removeModerator}>Moderator Kaldır</Button>}
         </Paper>
     );
