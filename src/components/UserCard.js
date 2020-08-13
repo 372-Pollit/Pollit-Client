@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import axios from 'axios';
 import {InfoDialog} from "./InfoDialog";
+import {Link} from "react-router-dom";
 
 const host = 'http://localhost:8081';
 

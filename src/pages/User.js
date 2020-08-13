@@ -182,7 +182,7 @@ export const User = (props) => {
                     {
                         tab === 0 ? <ProfileSurveys userId={user.id}/> :   // anketlerim
                             tab === 1 ? <FollowedUsers userId={user.id}/> :              // takip ettiklerim
-                                tab === 2 ? <Followers userId={user.id}/> :              // takipçilerim
+                                tab === 2 ? <Followers setMessage={setMessage} setIsOpen={setIsOpen} userId={user.id}/> :              // takipçilerim
                                     <SubbedCategories userId={user.id}/>                                  // abonelikler
                     }
                 </div>

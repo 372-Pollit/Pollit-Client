@@ -18,10 +18,11 @@ import {Messages} from "./pages/Messages";
 import './style/NewSurvey.css';
 import './style/Signup.css';
 import {InfoDialog} from "./components/InfoDialog";
+import {SurveyPage} from "./pages/SurveyPage";
 // Server host
 const host = 'http://localhost:8081';
 
-function App() {
+function App(props) {
     // States
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorElAvatarMenu, setAnchorElAvatarMenu] = useState(null);
@@ -623,7 +624,7 @@ function App() {
                        component={() => <Home searchText={searchText} surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
                                               isUserSearch={isUserSearch} users={users} surveyLoading={surveyLoading}
                                               isLoggedIn={!!user} curUser={user} handleChange={handleChange}/>}/>
-                {!user && <Route path={'/sign-up'} component={Signup}/>}
+            <Route path={'/survey/:id'} render={(props) => (<SurveyPage {...props} user={user}/>)}/>
                 {/*User login olduysa gidebileceği profil sayfası*/}
                 {user && <Route path={'/user/:id'} component={User}/>}
                 {user && <Route path={'/messages/:id'} component={Messages}/>}

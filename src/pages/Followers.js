@@ -8,6 +8,8 @@ const host = 'http://localhost:8081';
 export const Followers = (props) => {
 
     const curUserId = props.userId;
+    const setIsOpen = props.setIsOpen;
+    const setMessage = props.setMessage;
 
     const [users, setUsers] = useState([]);
     const [err, setError] = useState(null);
@@ -37,7 +39,7 @@ export const Followers = (props) => {
     return (
         <div className={'FollowedUsers'}>
             {users && users.map(user => (
-                <UserCard isFollowed={undefined}
+                <UserCard setMessage={setMessage} setOpen={setIsOpen} isFollowed={undefined}
                           curUserId={curUserId} user={user}/>
             ))}
         </div>

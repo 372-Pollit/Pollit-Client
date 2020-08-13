@@ -1,0 +1,95 @@
+.SurveyPage {
+
+  padding-top: 5rem;
+  display: flex !important;
+  flex-direction: column;
+
+  div {
+    display: flex;
+
+    span {
+      display: inline;
+      width: fit-content;
+
+      &:first-child {
+        margin-right: auto;
+      }
+
+      &:last-child {
+        margin-left: auto;
+      }
+    }
+
+  }
+
+  .UserCard {
+    margin-bottom: 2rem;
+  }
+
+  .TitleImage {
+    width: 100% !important;
+    border: 5px solid #C0C0C0;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+  }
+
+  .Explanation {
+    overflow-wrap: break-word;
+  }
+
+  .OptionRadio {
+    width: fit-content !important;
+  }
+
+  .VoteButton {
+    margin-left: auto;
+  }
+
+  .CommentInput {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .CommentCard {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    .CardMedia {
+      display: flex;
+
+      .CommentAvatar {
+        padding: 1rem;
+        width: 3rem;
+      }
+      .CommentUserInfo {
+        padding: 1rem;
+        display: flex;
+        flex: 8;
+        flex-direction: column;
+
+        p {
+          margin: 0;
+          text-align: left;
+          &:last-child {
+            color: #D6D6D6;
+          }
+        }
+      }
+      .CommentDate {
+        padding: 1rem;
+        flex: 1;
+        font-size: 0.6rem;
+      }
+    }
+
+    .CommentContent {
+      background: #E3F2FD;
+      text-align: left;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+
