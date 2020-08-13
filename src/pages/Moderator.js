@@ -28,9 +28,12 @@ import {
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import { BlockedUsers } from './BlockedUsers';
+import { BlockedSurveys } from './BlockedSurveys';
+import { BlockedComments } from './BlockedComments';
 
 const host = 'http://localhost:8081';
-const tabs = ["Anketlerim", "Takip Ettiklerim", "Takipçilerim", "Abonelikler"];
+const tabs = ["Engelli Kullanıcılar", "Engelli Anketler", "Engelli Yorumlar"];
 
 export const Moderator = (props) => {
     const userId = props.match.params.id;
@@ -104,7 +107,7 @@ export const Moderator = (props) => {
         user ?
             <Container maxWidth={'md'}>
                 <Card className={'UserCard'}>
-                    <img className={'UserAvatar'}
+                    {/* <img className={'UserAvatar'}
                          src={user.sex === 'M' ? '/images/male_avatar.svg' : '/images/female_avatar.svg'}/>
                     {!edit && <CardContent className={'UserData'}>
                         <Typography className={'name'}
@@ -170,7 +173,7 @@ export const Moderator = (props) => {
                         </Button>}
                         {edit &&
                         <Button type={'submit'} onClick={handleSubmit}><DoneIcon color={''} style={{color: 'green'}}/></Button>}
-                    </CardActions>
+                    </CardActions> */}
                 </Card>
                 <Tabs value={tab} className={'tabs'} indicatorColor="primary"
                       textColor="primary" onChange={handleChange} centered={true}>
@@ -180,10 +183,9 @@ export const Moderator = (props) => {
                 </Tabs>
                 <div className="main">
                     {
-                        tab === 0 ? <ProfileSurveys userId={user.id}/> :   // anketlerim
-                            tab === 1 ? <FollowedUsers userId={user.id}/> :              // takip ettiklerim
-                                tab === 2 ? <Followers userId={user.id}/> :              // takipçilerim
-                                    <SubbedCategories userId={user.id}/>                                  // abonelikler
+                        tab === 0 ? <BlockedUsers userId={user.id}/> :
+                            tab === 1 ? <BlockedSurveys userId={user.id}/> :
+                                tab === 2 ? <BlockedComments userId={user.id}/> : ""
                     }
                 </div>
                 <InfoDialog id={'UserPageDialog'} message={message} isOpen={isOpen} setIsOpen={setIsOpen}/>

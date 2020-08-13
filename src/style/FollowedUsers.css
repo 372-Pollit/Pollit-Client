@@ -33,4 +33,10 @@
   color: white;
   margin-right: 1rem;
 }
+.FollowedUsers .UserCard .followButton {
+  margin-left: auto;
+  background: #40B385;
+  color: white;
+  margin-right: 1rem;
+}
 /*# sourceMappingURL=FollowedUsers.css.map */
