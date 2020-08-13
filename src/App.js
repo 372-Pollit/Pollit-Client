@@ -17,6 +17,7 @@ import './fonts.css';
 import {Messages} from "./pages/Messages";
 import './style/NewSurvey.css';
 import './style/Signup.css';
+import {InfoDialog} from "./components/InfoDialog";
 // Server host
 const host = 'http://localhost:8081';
 
@@ -57,6 +58,12 @@ function App() {
     const [signupBdate, setSignupBdate] = useState(new Date().toISOString().substring(0,16));
     const [signupSex, setSignupSex] = useState(null);
     const [isSignupOpen, setSignup] = useState(false);
+    const [isPopular, setIsPopular] = useState(false);
+    const [searchCategory, setSearchCategory] = useState(false);
+    const [categoryId, setCategoryId] = useState(null);
+
+    const [infoMessage, setInfoMessage] = useState("");
+    const [infoDialogOpen, setInfoDialogOpen] = useState();
 
     let tmp_searchText = "";
 
@@ -101,14 +108,17 @@ function App() {
                 setError(err);
                 setIsLoading(false);
             });
-        getSurveys();
+        if (!user) {
+            getSurveys();
+        }
     }, []);
 
     useEffect(() => {
-        setPageNumber(0);
-        setSurveys([]);
-        getSurveys();
-    }, [user]);
+        console.log(user);
+        if (surveys.length === 0 && !isInSearch) {
+            getSurveys();
+        }
+    }, [surveys]);
 
 
     //Custom functions
@@ -133,11 +143,9 @@ function App() {
                     .catch(err => {
                         setSurveyLoading(false);
                         setError(err);
-                    })
+                    });
 
-            }
-
-            else {
+            } else {
 
                 axios.get(host + '/survey/search', {
                     params: {
@@ -153,12 +161,12 @@ function App() {
                     .catch(err => {
                         setSurveyLoading(false);
                         setError(err);
-                    })
+                    });
 
             }
 
         } else {
-            if (user) {
+            if (user && !isPopular && !searchCategory) {
                 setSurveyLoading(true);
                 axios.get(host + '/survey/forUser', {
                     params: {
@@ -176,8 +184,25 @@ function App() {
                         setError(err);
                     });
 
-            }
-            else {
+            } else if (searchCategory) {
+                axios.get(host + '/survey/searchByCategory', {
+                    params: {
+                        pageNumber: pageNumber,
+                        categoryId: categoryId
+                    }
+                })
+                    .then(res => {
+                        if (res.data.lenght !== 0) {
+                            setPageNumber(pageNumber + 1);
+                        }
+                        setSurveys(surveys.concat(res.data));
+                        setSurveyLoading(false);
+                    })
+                    .catch(err => {
+                        setError(err);
+                        setSurveyLoading(false);
+                    })
+            } else {
                 setSurveyLoading(true);
                 axios.get(host + '/survey/trends', {
                     params: {
@@ -213,7 +238,20 @@ function App() {
 
     };
 
-    const handleClose = () => {
+    const setAllToFalse = () => {
+        setIsPopular(false);
+        setSearchCategory(false);
+        setIsInSearch(false);
+        setIsUserSearch(false);
+        setSearchCategory(false);
+    };
+
+    const handleClose = (id) => {
+        setPageNumber(0);
+        setCategoryId(id);
+        setAllToFalse();
+        setSearchCategory(true);
+        setSurveys([]);
         setAnchorEl(null);
     };
 
@@ -270,6 +308,13 @@ function App() {
 
     };
 
+    const setPopular = () => {
+        setAllToFalse();
+        setIsPopular(true);
+        setPageNumber(0);
+        setSurveys([]);
+    };
+
     const handleChange = (e) => {
         tmp_searchText = e.target.value;
     };
@@ -301,6 +346,8 @@ function App() {
                     localStorage.setItem('registerDate', res.data.registerDate);
                     localStorage.setItem('sex', res.data.sex);
                     localStorage.setItem('username', res.data.username);
+                    setPageNumber(0);
+                    setSurveys([]);
                 }
 
             })
@@ -312,6 +359,8 @@ function App() {
     };
 
     const logout = () => {
+        setPageNumber(0);
+        setSurveys([]);
         setUser(null);
         handleAvatarMenuClose();
         localStorage.removeItem('birthDate');
@@ -332,6 +381,9 @@ function App() {
 
     const anasayfa = () => {
         setSearchText("");
+        setPageNumber(0);
+        setAllToFalse();
+        setSurveys([]);
     };
 
     // new survey handles
@@ -392,10 +444,6 @@ function App() {
         clearNewSurvey();
     };
 
-    const postNewSurvey = () => {
-        //TODO
-    };
-
     //signup handles
     const openSignup = () => {
         setSignup(true);
@@ -415,7 +463,7 @@ function App() {
         setSignupPasswordAgain(null);
         setSignupBdate(null);
         setSignupSex(null);
-    }
+    };
 
     const handleSignupFname = (e) => {
         setSignupFname(e.target.value);
@@ -445,6 +493,28 @@ function App() {
         setSignupBdate(e.target.value);
     };
 
+    const postNewSurvey = () => {
+        axios.post(host + '/survey/post', {
+            title: newSurveyTitle,
+            explanation: newSurveyExplanation,
+            dueDate: newSurveyDueDate,
+            options: newSurveyOptions,
+            posterId: user.id,
+            tags: newSurveyTags,
+            startDate: newSurveyStartingDate
+        })
+            .then(res => {
+                setInfoDialogOpen(true);
+                setInfoMessage("Anket başarıyla yayınlandı");
+                setNewSurvey(false);
+            })
+            .catch(err => {
+                setInfoDialogOpen(true);
+                setInfoMessage("Anket yayınlanırken hata oluştu:" + err.message );
+                setNewSurvey(false);
+            })
+    };
+
     const handleSignupSex = (e) => {
         setSignupSex(e.target.value);
     };
@@ -452,70 +522,67 @@ function App() {
     const handleSignupSubmit = (e) => {
         e.preventDefault();
         axios.get(host + '/user/findByUsername', {
-            params: { username: signupUname }
+            params: {username: signupUname}
         })
-        .then(res1 => {
-            if (res1.data === '') {
-                axios.get(host + '/user/findByEmail', {
-                    params: { email: signupEmail }
-                })
-                .then(res2 => {
-                    if (res2.data === '') {
-                        axios.post(host + '/user/signup', {
-                            username: signupUname,
-                            password: signupPassword,
-                            email: signupEmail,
-                            first_name: signupFname,
-                            last_name: signupLname,
-                            sex: signupSex,
-                            birth_date: signupBdate
-                        })
-                        .then(res => {
-                            closeSignup();
-                            axios.get(host + '/user/isUser', {
-                                params: {
-                                    username: username,
-                                    password: password
-                                }
-                            })
-                                .then(res3 => {
-
-                                    if (res3.data==='') {
-                                        alert('hatali giris');
-                                    }
-                                    else {
-                                        alert(`hi ${res3.data.username}`);
-                                        setUser(res3.data);
-                                    }
-
+            .then(res1 => {
+                if (res1.data === '') {
+                    axios.get(host + '/user/findByEmail', {
+                        params: {email: signupEmail}
+                    })
+                        .then(res2 => {
+                            if (res2.data === '') {
+                                axios.post(host + '/user/signup', {
+                                    username: signupUname,
+                                    password: signupPassword,
+                                    email: signupEmail,
+                                    first_name: signupFname,
+                                    last_name: signupLname,
+                                    sex: signupSex,
+                                    birth_date: signupBdate
                                 })
-                                .catch(err => {
-                                    setError(err);
-                                    alert('sgnlgn');
-                                });
+                                    .then(res => {
+                                        closeSignup();
+                                        axios.get(host + '/user/isUser', {
+                                            params: {
+                                                username: username,
+                                                password: password
+                                            }
+                                        })
+                                            .then(res3 => {
+
+                                                if (res3.data === '') {
+                                                    alert('hatali giris');
+                                                } else {
+                                                    alert(`hi ${res3.data.username}`);
+                                                    setUser(res3.data);
+                                                }
+
+                                            })
+                                            .catch(err => {
+                                                setError(err);
+                                                alert('sgnlgn');
+                                            });
+                                    })
+                                    .catch(err => {
+                                        alert("Could not signup");
+                                    })
+                            } else {
+                                alert("E-mail is already in use.");
+                            }
                         })
                         .catch(err => {
-                            alert("Could not signup");
+                            setError(err);
+                            alert('eml');
                         })
-                    }
-                    else {
-                        alert("E-mail is already in use.");
-                    }
-                })
-                .catch(err => {
-                    setError(err);
-                    alert('eml');
-                })
-            }
-            else {
-                alert("Username is already in use.");
-            }
-        })
-        .catch(err => {
-            setError(err);
-            alert('usr');
-        });
-    }
+                } else {
+                    alert("Username is already in use.");
+                }
+            })
+            .catch(err => {
+                setError(err);
+                alert('usr');
+            });
+    };
 
     // Custom styles
     const loginTextField = {
@@ -531,11 +598,11 @@ function App() {
                     <Tabs className={"tabBar"}>7
                         <img className={'logo'} src="/logo.png" alt="logo" href={'/'}/>
                         <LinkRouter className={'AnasayfaLink'} to="/">
-                            <Tab className={'Anasayfa'} label={'Anasayfa'}/>
+                            <Tab className={'Anasayfa'} label={'Anasayfa'} onClick={anasayfa}/>
                         </LinkRouter>
                         <Tab label={'Kategoriler'} onClick={handleClick} aria-controls={'categories_menu'}/>
                         {user && <LinkRouter className={'PopülerLink'} to="/">
-                            <Tab className={'Popüler'} label={'Popüler'}/>
+                            <Tab className={'Popüler'} onClick={setPopular} label={'Popüler'}/>
                         </LinkRouter>}
                         {user && <LinkRouter className={'MesajlarLink'} to={`/messages/${user.id}`}>
                             <Tab className={'Mesajlar'} label={'Mesajlar'}/>
@@ -548,7 +615,7 @@ function App() {
                             onClose={handleClose}
                         >
                             {categories && categories.map(category => (
-                                <MenuItem onClick={handleClose}>{category.name}</MenuItem>
+                                <MenuItem onClick={() => handleClose(category.id)}>{category.name}</MenuItem>
                             ))}
 
                         </Menu>
@@ -624,7 +691,7 @@ function App() {
                     handleSignupPasswordAgain={handleSignupPasswordAgain} signupBdate={signupBdate}
                     handleSignupBdate={handleSignupBdate} signupSex={signupSex}
                     handleSignupSex={handleSignupSex} handleSignupSubmit={handleSignupSubmit}/>
-
+            <InfoDialog id={'HomePageInfoDialog'} message={infoMessage} setIsOpen={setInfoDialogOpen} isOpen={infoDialogOpen}/>
             <AppFooter/>
         </div>
     );
