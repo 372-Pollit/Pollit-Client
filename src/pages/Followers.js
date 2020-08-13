@@ -37,7 +37,7 @@ export const Followers = (props) => {
     return (
         <div className={'FollowedUsers'}>
             {users && users.map(user => (
-                <UserCard isFollowed={false}
+                <UserCard isFollowed={undefined}
                           curUserId={curUserId} user={user}/>
             ))}
         </div>

@@ -13,6 +13,7 @@ import history from './history';
 import {Signup} from "./pages/Signup";
 import {User} from "./pages/User";
 import './fonts.css';
+import {Messages} from "./pages/Messages";
 // Server host
 const host = 'http://localhost:8081';
 
@@ -199,7 +200,7 @@ function App() {
                         {user && <Link className={'PopülerLink'} to="/">
                             <Tab className={'Popüler'} label={'Popüler'}/>
                         </Link>}
-                        {user && <Link className={'MesajlarLink'} to="/">
+                        {user && <Link className={'MesajlarLink'} to={`/messages/${user.id}`}>
                             <Tab className={'Mesajlar'} label={'Mesajlar'}/>
                         </Link>}
                         <Menu
@@ -253,11 +254,13 @@ function App() {
                 </AppBar>
                 <Toolbar/>
                 <Route exact path={'/'}
-                       component={() => <Home searchText={searchText} surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
+                       component={() => <Home  searchText={searchText} surveys={surveys} getSurveys={getSurveys} handleSubmit={handleSubmit}
                                               surveyLoading={surveyLoading} handleChange={handleChange}/>}/>
+
                 {!user && <Route path={'/sign-up'} component={Signup}/>}
                 {/*User login olduysa gidebileceği profil sayfası*/}
                 {user && <Route path={'/user/:id'} component={User}/>}
+                {user && <Route path={'/messages/:id'} component={Messages}/>}
             </Router>
 
             <AppFooter/>
