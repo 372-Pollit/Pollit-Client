@@ -16,6 +16,8 @@ export const UserCard = (props) => {
     const getFollowedUsers = props.getFollowedUsers;
     const setMessage = props.setMessage;
     const setOpen = props.setOpen;
+    const admin = props.admin;
+    const moderatorKaldir = props.moderatorKaldir;
 
     const [isCurUserFollowing, setIsCurUserFollowing] = useState(false);
     const [error, setError] = useState(null);
@@ -67,6 +69,34 @@ export const UserCard = (props) => {
             })
     };
 
+    const removeModerator = () => {
+        axios.post(host + '/moderator/remove', {
+            id: user.id
+        })
+            .then(res => {
+                setOpen(true);
+                setMessage(user.username + ' moderator kaldirildi');
+            })
+            .catch(err => {
+                setOpen(true);
+                setMessage(user.username + ' moderator kaldirilirken hata oluştu \n' + err.message);
+            })
+    };
+
+    const addModerator = () => {
+        axios.post(host + '/moderator/add', {
+            id: user.id
+        })
+            .then(res => {
+                setOpen(true);
+                setMessage(user.username + ' moderator eklendi');
+            })
+            .catch(err => {
+                setOpen(true);
+                setMessage(user.username + ' moderator eklenirken hata oluştu \n' + err.message);
+            })
+    };
+
     return (
         <Paper className={'UserCard'}>
             <img className={'userAvatar'}
@@ -75,8 +105,10 @@ export const UserCard = (props) => {
                 <Typography component={'h5'} className={''}>{user.firstName + ' ' + user.lastName}</Typography>
                 <Typography component={'h5'}>@{user.username}</Typography>
             </div>
-            {isCurUserFollowing && curUserId && <Button className={'unfollowButton'} color={'secondary'} onClick={unFollow}>Takibi Bırak</Button>}
-            {!isCurUserFollowing && curUserId && <Button className={'followButton'} color={'secondary'} onClick={follow}>Takip Et</Button>}
+            {!admin && isCurUserFollowing && curUserId && <Button className={'unfollowButton'} color={'secondary'} onClick={unFollow}>Takibi Bırak</Button>}
+            {!admin && !isCurUserFollowing && curUserId && <Button className={'followButton'} color={'secondary'} onClick={follow}>Takip Et</Button>}
+            {admin && moderatorKaldir && <Button className={'removeModeratorButton'} color={'secondary'} onClick={removeModerator}>Moderator Kaldır</Button>}
+            {admin && !moderatorKaldir && <Button className={'addModeratorButton'} color={'secondary'} onClick={addModerator}>Moderator Ekle</Button>}
         </Paper>
     );
 };
