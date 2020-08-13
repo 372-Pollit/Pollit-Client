@@ -189,8 +189,8 @@ const Chat = (props) => {
 
     useEffect(() => {
         setMessages([]);
-        if (intervalId) {
-            clearInterval(intervalId);
+        if (tmp_intervalId) {
+            clearInterval(tmp_intervalId);
         }
         let tmp = setInterval(getMessages, 200);
         tmp_intervalId = tmp;

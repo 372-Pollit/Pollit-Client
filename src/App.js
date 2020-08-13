@@ -57,6 +57,7 @@ function App() {
     const [signupBdate, setSignupBdate] = useState(null);
     const [signupSex, setSignupSex] = useState(null);
     const [isSignupOpen, setSignup] = useState(false);
+    const [isPopular, setIsPopular] = useState(false);
 
     let tmp_searchText = "";
 
@@ -79,14 +80,17 @@ function App() {
                 setError(err);
                 setIsLoading(false);
             });
-        getSurveys();
+        if (!user) {
+            getSurveys();
+        }
     }, []);
 
     useEffect(() => {
-        setPageNumber(0);
-        setSurveys([]);
-        getSurveys();
-    }, [user]);
+        console.log(user);
+        if (surveys.length === 0 && !isInSearch) {
+            getSurveys();
+        }
+    }, [surveys]);
 
 
     //Custom functions
@@ -136,7 +140,7 @@ function App() {
             }
 
         } else {
-            if (user) {
+            if (user && !isPopular) {
                 setSurveyLoading(true);
                 axios.get(host + '/survey/forUser', {
                     params: {
@@ -248,6 +252,12 @@ function App() {
 
     };
 
+    const setPopular = () => {
+        setIsPopular(true);
+        setPageNumber(0);
+        setSurveys([]);
+    };
+
     const handleChange = (e) => {
         tmp_searchText = e.target.value;
     };
@@ -268,6 +278,9 @@ function App() {
                 else {
                     alert(`hi ${res.data.username}`);
                     setUser(res.data);
+                    setPageNumber(0);
+                    setSurveys([]);
+
                 }
 
             })
@@ -279,6 +292,8 @@ function App() {
     };
 
     const logout = () => {
+        setPageNumber(0);
+        setSurveys([]);
         setUser(null);
         handleAvatarMenuClose();
     };
@@ -289,6 +304,10 @@ function App() {
 
     const anasayfa = () => {
         setSearchText("");
+        setIsPopular(false);
+        setPageNumber(0);
+        setIsInSearch(false);
+        setSurveys([]);
     };
 
     // new survey handles
@@ -488,11 +507,11 @@ function App() {
                     <Tabs className={"tabBar"}>7
                         <img className={'logo'} src="/logo.png" alt="logo" href={'/'}/>
                         <Link className={'AnasayfaLink'} to="/">
-                            <Tab className={'Anasayfa'} label={'Anasayfa'}/>
+                            <Tab className={'Anasayfa'} label={'Anasayfa'} onClick={anasayfa}/>
                         </Link>
-                        <Tab label={'Kategoriler'} onClick={handleClick} aria-controls={'categories_menu'}/>
+                        <Tab label={'Kategoriler'} aria-controls={'categories_menu'}/>
                         {user && <Link className={'PopülerLink'} to="/">
-                            <Tab className={'Popüler'} label={'Popüler'}/>
+                            <Tab className={'Popüler'} onClick={setPopular} label={'Popüler'}/>
                         </Link>}
                         {user && <Link className={'MesajlarLink'} to={`/messages/${user.id}`}>
                             <Tab className={'Mesajlar'} label={'Mesajlar'}/>
